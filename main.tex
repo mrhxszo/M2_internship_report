@@ -11,8 +11,8 @@
 
 
 
-% \usepackage[style=numeric, heading=none, sorting=none]{biblatex}
-% \addbibresource{bib_files/Biblio.bib}
+\usepackage[style=numeric, sorting=none]{biblatex}
+\addbibresource{bib_files/Biblio.bib}
 
 %-------------------------- début du document ---------------------------%
 
@@ -30,6 +30,36 @@
 
 %------------------------------ table des matières ----------------------%
 \newpage
+
 \tableofcontents
+
+
+%----------------------------- outline -----------------------------%
+
+\include{tex_files/introduction}
+
+\section{Context}
+\subsection{Work environment}
+\subsection{Project description}
+\subsection{Objectives}
+
+
+\section{CD-SAXS}
+\subsection{Introduction}
+\subsection{Theoretical background}
+\subsection{Experimental setup}
+\subsection{Fitting Algorithm}
+\subsection{Analysis of the reconstructed structure}
+
+\section{CD-SAXS Python Application}
+\subsection{Introduction}
+\subsection{Conception}
+\subsection{Simulation Models}
+\subsection{On the fly uncertainity estimation}
+\subsection{Future Prospects}
+
+\newpage
+%generate the bibliography
+\printbibliography
 
 \end{document}
