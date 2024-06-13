@@ -114,4 +114,67 @@ advanced healthcare, robust national security, and a cutting-edge digital landsc
 \medskip
 
 \subsection{Project description}
+
+\medskip
+CEA Grenoble, a frontrunner in material metrology and characterization, recognizes the potential
+ of CD-SAXS for analyzing nanostructures. To 
+ this end, CEA has actively invested in CD-SAXS development for several years.
+
+\medskip
+
+During my work-study program, I contributed to this initiative by developing a Python application
+ for data fitting and analysis obtained through CD-SAXS. This technique relies on an inverse 
+ algorithm that translates scattering intensity data into a relevant real-space structure. The 
+ algorithm simulates the experiment using a model and iteratively compares the simulated data 
+ with the experimental data until a good fit is achieved. A robust codebase is essential for 
+ efficient CD-SAXS data processing.
+
+\medskip
+
+Previously, a rudimentary collection of functions developed at Brookhaven served as the 
+foundation for CD-SAXS analysis. However, it lacked the coherence of a well-structured application.
+The code for various data simulation models was similarly disorganized. My primary task was to 
+develop a user-friendly Python application that integrates these functions, streamlining data 
+fitting and result analysis.
+
+\medskip
+
+Furthermore, the existing code suffered from slow execution speeds due to a lack of optimisation.
+To address this, I implemented optimisations and parallelisation techniques, significantly 
+improving the code's efficiency.
+
+\medskip
+
+
 \subsection{Objectives}
+
+\medskip
+
+The initial aim of this project was commendable - to improve the existing CD-SAXS data analysis 
+codebase. However, as we delved deeper, the project's objectives evolved into a series of 
+well-defined, targeted enhancements. This iterative approach ensured that our efforts addressed 
+the specific needs of researchers at CEA Grenoble.
+
+Here's a breakdown of the key objectives that emerged:
+
+\begin{itemize}
+    \item \textbf{Unleashing Computational Power:}
+    \begin{itemize}
+        \item \textbf{Vectorization for Server Optimization:} Standard code often struggles to fully leverage the parallel processing capabilities of modern servers. We identified the need to vectorize the code, allowing it to efficiently utilize the computational power available on CEA's powerful servers. This significantly boosted the application's overall processing speed.
+        \item \textbf{GPU Acceleration - Pushing the Limits:} Recognizing the ever-increasing capabilities of Graphics Processing Units (GPUs), we explored the potential of integrating GPU acceleration into the code. This would potentially unlock even faster performance, enabling us to tackle increasingly complex datasets.
+    \end{itemize}
+    \item \textbf{User-Centric Design:}
+    \begin{itemize}
+        \item \textbf{Building a Coherent Application:} The existing code, while functional, lacked the user-friendliness and intuitiveness necessary. We prioritized creating a well-structured, modular application. This would not only simplify data fitting and analysis but also make future feature additions and maintenance easier and more efficient.
+    \end{itemize}
+    \item \textbf{Quantifying Uncertainty - Confidence in Results:}
+    \begin{itemize}
+        \item \textbf{MCMC for Uncertainty Estimation:} A critical component missing from the original code was the ability to estimate the uncertainty associated with the fitted parameters. We addressed this by implementing a Markov Chain Monte Carlo (MCMC) algorithm. This powerful technique allowed us to generate a statistically representative set of solutions, enabling us to accurately estimate the level of uncertainty in the fitted parameters.
+    \end{itemize}
+    \item \textbf{Real-Time Uncertainty Estimation - Saving Valuable Time:}
+    \begin{itemize}
+        \item \textbf{On-the-Fly Uncertainty:} Taking the concept of uncertainty estimation further, we aimed to integrate this feature into the data acquisition process itself, specifically during synchrotron measurements. This would allow researchers to estimate the uncertainty in real-time. By setting a desired uncertainty threshold, the system could potentially stop the experiment once this level of certainty is achieved. This innovation has the potential to save valuable synchrotron beamtime, a precious resource for researchers.
+    \end{itemize}
+\end{itemize}
+
+This refined set of objectives ensured that the project delivered valuable enhancements tailored to the needs of CEA researchers. The project not only improved the code's performance but also transformed it into a user-friendly and powerful tool for analyzing CD-SAXS data with greater confidence.
