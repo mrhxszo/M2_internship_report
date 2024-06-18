@@ -9,7 +9,7 @@ brings not only manufacturing hurdles but also a metrology problem. Precisely
 measuring these features during production is crucial for high-quality chips.
 Existing in-line metrology techniques, like optical critical-dimension (OCD)
 scatterometry and critical-dimension scanning electron microscopy (CD-SEM), are
-nearing their limits. OCD struggles with limitations inherent to light and the
+nearing their limits \cite{SEM_resolution,OCD_resolution}. OCD struggles with limitations inherent to light and the
 ever-shrinking features. CD-SEM offers valuable insights but is restricted by
 the sampling area. To overcome these obstacles, the industry is exploring X-ray-based metrology.
 X-rays have much shorter wavelengths than the features being measured, allowing
@@ -22,7 +22,7 @@ Early research on X-ray characterization of patterned nanostructures used reflec
 methods like X-ray diffraction (XRD) and grazing-incidence small-angle X-ray scattering (GISAXS). 
 These techniques demonstrated X-ray's sensitivity to features' shape and spacing.
 Furthermore, X-rays can probe buried features due to their sensitivity to composition via electron density. For instance, a GaInAs/InP multilayer was studied with high-resolution XRD, revealing 
-sensitivity to both the grating and strain between layers (Baumbach et al., 2000).
+sensitivity to both the grating and strain between layers \cite{Baumbach_Lübbert_Gailhanou_2000}.
 
 \medskip
 
@@ -37,14 +37,14 @@ However, GISAXS limitations include a large spot size (50-100 mm wide by 5-10 mm
 computational challenges for complex nanostructure modeling. This limits its use for 
 semiconductor metrology to simple, large-area patterns like memory arrays (Hofmann et al.,
 2009; Scholze et al., 2011). Logic devices require smaller probing areas due to test structure 
-size and the complexity of the multicomponent, 3D nanostructures.
+size and the complexity of the multicomponent, 3D nanostructures. \cite{phd_freychet}
 
 \medskip
 
 Unlike other X-ray techniques, CDSAXS uses a transmission geometry, enabling a much smaller
 spot size compared to methods like GISAXS. This allows for more precise measurements on smaller
 features. Studies have shown CDSAXS's effectiveness in characterizing the shape and spacing of
-nanometer-sized patterns (Jones et al., 2003; Hu et al., 2004; Jones, 2006; Wang et al., 2007; Sunday et al., 2015).
+nanometer-sized patterns \cite{sunday_2015}.
 
 \medskip
 CDSAXS  utilises variable-angle transmission scattering. By rotating the sample, it can probe the vertical profile of the nanostructures. This allows 
@@ -52,7 +52,7 @@ for reconstructing their shape and composition in two or even three dimensions.
 We can think of it as a diffraction experiment for single crystals, but instead of a crystal, the 
 periodic array of nanostructures acts like one. This technique excels at reconstructing 
 intricate shapes smaller than 15 nm and with spacings around 30 nm, dimensions crucial for 
-the semiconductor industry.
+the semiconductor industry. \cite{first_cdsaxs_article}
 
 \subsection{Scattering Model}
 
@@ -82,18 +82,18 @@ During my work-study program, we were mainly concerned with lines of nanostructu
 these can be represented as a stack of trapezoids.
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.3\textwidth]{images/trapezoid.png}
+    \includegraphics[width=0.2\textwidth]{images/trapezoid.png}
     \caption{Cross-section of a nanostructure line represented as a stack of trapezoids.}
     
 \end{figure}
 We can calculate the analytical fourier transform of a trapezoidal shape to use for fitting
-can be calculated is given by expression:
+can be calculated is given by expression \cite{sunday_2015}:
 \begin{equation}
     F\left(q_{x}, q_{z}\right)=\frac{1}{q_{x}}\left[-\frac{m_{1}}{t_{1}} e^{-i q_{x}\left(\frac{\omega_{0}}{2}\right)}\left(1-e^{-i h\left(\frac{q_{x}}{m_{1}}+q_{z}\right)}\right)\right. \\ +\frac{m_{2}}{t_{2}} e^{-i q_{x}\left(\frac{\omega_{0}}{2}\right)}\left(1-e^{\left.-i h\left(\frac{q_{x}}{m_{2}}+q_{z}\right)\right)}\right]
 \end{equation}
 where,
 
-\( \begin{array}{l}\mathrm{m}_{1}=\tan \left(\beta_{1}\right) m_{2}=\tan \left(\pi-\beta_{r}\right) \\ t_{1}-q_{x}+m_{1} q_{z}\end{array} \)
+\( \begin{array}{l}\mathrm{m}_{1}=\tan \left(\beta_{1}\right) , m_{2}=\tan \left(\pi-\beta_{r}\right), \\ t_{1}= q_{x}+m_{1} q_{z}, t_{2}= q_{x}+m_{2} q_{z}\end{array} \)
 
 \medskip
 
@@ -113,7 +113,7 @@ can be caused by two factors:
         which also affects the periodicity.
 \end{itemize}
 
-Both factors indicate a degree of long-range order within the pattern. Additionally, they provide insights into specific types of line edge roughness [these jerome].
+Both factors indicate a degree of long-range order within the pattern. Additionally, they provide insights into specific types of line edge roughness \cite{these_reche}.
 
 To account for this distribution, we introduce an effective Debye-Waller factor, similar to the one used for fluctuations in crystal lattices.
 
@@ -180,7 +180,7 @@ Another strategy involves massive computing resources with parallelization and h
 \medskip
 
 Genetic and evolutionary algorithms have emerged as promising alternatives. These methods mimic biological evolution, with the model parameters acting as the "genetic code." Starting with randomly generated parameters, these algorithms iteratively refine them through a "mixing strategy" over multiple generations until the optimal set is found. This approach excels at searching large parameter spaces with wide bounds, making it suitable for complex structures.
-
+\cite{hannon2016advancing}
 \subsubsection{Covariance Matrix Adaptation Evolution Strategy (CMAES)}
 
 One such algorithm is the Covariance Matrix Adaptation Evolution Strategy (CMAES). This method is particularly well-suited for high-dimensional optimization problems, making it ideal for complex nanostructure analysis. CMAES operates by maintaining a population of candidate solutions, with each iteration generating new candidates based on the previous generation's performance. By adapting the covariance matrix of the candidate solutions, CMAES can efficiently explore the parameter space and converge on the optimal solution.
@@ -192,19 +192,125 @@ One such algorithm is the Covariance Matrix Adaptation Evolution Strategy (CMAES
     \label{fig:cmaes}
 \end{figure}
 
+\FloatBarrier
+
+\medskip
+
 The code for CD-SAXS generates a set of possible solutions for the parametres of the model. Then we calculate the 
 analytical fourier transform of the model and compare it with the experimental data. To compare the two,
 we use mean-absolute error log:
 
+\medskip
+
 \begin{equation}
-    \Xi=\frac{1}{N_{\mathrm{q}}-1} \sum_{\overrightarrow{\mathbf{q}}}\left|\log _{10} I_{\mathrm{Sim}}(\overrightarrow{\mathbf{q}})-\log _{10} I(\overrightarrow{\mathbf{q}})\right|
+    \Xi=\frac{1}{N_{\mathrm{q}}-1} \sum_{\mathbf{q}}\left|\log _{10} I_{\mathrm{Sim}}(\mathbf{q})-\log _{10} I(\mathbf{q})\right|
 \end{equation}
 
-where $I_{\mathrm{Sim}}(\overrightarrow{\mathbf{q}})$ is the simulated intensity and $I(\overrightarrow{\mathbf{q}})$ is the experimental intensity.
+\medskip
 
-We call it the obtained quantity the goodness of fit. The algorithm then tries to minimize this quantity by adjusting the parameters of the model.
+where $I_{\mathrm{Sim}}(\mathbf{q})$ is the simulated intensity and $I(\mathbf{q})$ is the experimental intensity.
+
+\medskip
+
+We call it the goodness of fit. The algorithm then tries to minimize this quantity by adjusting the parameters of the model.
+
+\medskip
+
+In an article \cite{hannon2016advancing}, researchers investigated the efficiency of various algorithms
+for reconstructing various nanostructures using X-ray scattering data.
+Their findings specifically highlighted the advantages of the CMAES. Compared to other
+methods like Markov Chain Monte Carlo (MCMC) and Differential Evolution 
+(DE), CMAES demonstrated significantly faster convergence times when 
+analyzing an experimental structure. Notably, CMAES achieved a solution 
+that matched the quality of previous studies in approximately 1 to 2 
+orders of magnitude less time than MCMC and less than an order of 
+magnitude time than DE. This speed advantage held true regardless 
+of the specific objective function used to evaluate the goodness of fit. 
+These results suggest that CMAES offers a powerful tool for analyzing 
+complex nanostructures with X-ray scattering data, particularly when 
+dealing with limited computational resources or tight time constraints.
 
 \subsubsection{Uncertainity estimation by Monte Carlo Markov Chain(MCMC) method}
 
+The CMAES algorithm provides a single best-fit solution for the nanostructure parameters. However, it's essential to understand the uncertainty associated with these parameters.
+This uncertainity relates to the different possible combinations of parameters that could result in a similar goodness of fit. 
+For instance, decreasing slightly height of one trapezoid and increasing the height of other one can result in a similar goodness of fit.
+To address this, we can use MCMC algorithm to explore and find all the sets of population that can result in the same goodness of fit.
 
-\subsection{Analysis of the reconstructed structure}
+\medskip
+
+This confidence interval then can be calculated from this population of parameters. This interval gives us an idea of the range of possible values for each parameter that could still provide a good fit to the data.
+The lower and upper bounds of this interval can be used to estimate the uncertainty associated with each parameter.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\textwidth]{images/mcmc.png}
+    \caption{MCMC algorithm exploring all possible sets of parameters that can result in the same goodness of fit.}
+\end{figure}
+\medskip
+
+After determining the best-fit model structure, the researchers of this article \cite{sunday2016evaluation}
+employed a MCMC algorithm to calculate the uncertainties associated with the model parameters.
+This algorithm generates a population of models that can be evaluated to assess the uncertainty
+in a set of parameters. The probability of a given model being accepted into the population
+depends on how well the simulated scattering profile it generates matches the experimentally
+measured one.
+
+Here is the overview of there algorithm:
+
+\begin{enumerate}
+    \item \textbf{Seeding:} The algorithm initializes with the model (M) exhibiting the best known goodness-of-fit, denoted GFB.
+    \item \textbf{Proposal generation:} Random perturbations are applied to each parameter within the model, resulting in a new candidate model (M$_i$) and its corresponding goodness-of-fit GF (GF$_i$).
+    \item \textbf{Acceptance for better fit:} If GF$_i$ $<$ GF$_{i-1}$, then M$_i$ is automatically accepted into the population (and GFB is updated to GFB = GF$_i$ if the new model has a better fit).
+    \item \textbf{Metropolis-Hastings acceptance for worse fit:} If GF$_i$ $>$ GF$_{i-1}$, the probability (P$_i$) of accepting M$_i$ is calculated using Eq. \eqref{eq:mcmc_acceptance}:
+    \begin{equation}
+        P_i = \exp \left( -0.5 \cdot (\text{GF}_i - \text{GFB}) \right) \label{eq:mcmc_acceptance}
+    \end{equation}
+    A random number $\alpha$ between 0 and 1 is then generated. If $\alpha < P_i$, M$_i$ is accepted; otherwise, it is rejected, and a new proposal is generated from M$_{i-1}$.
+    \item \textbf{Equilibrium and resampling:} Steps 2-4 are repeated until the model population reaches equilibrium. To avoid correlations between accepted models, the population is resampled (e.g., every 50 steps in this case).
+    \item \textbf{Uncertainty calculation:} The uncertainties are calculated from the final accepted model population and represent 95\% confidence intervals. The step size for generating proposals was optimized to achieve an
+     acceptance probability between 0.25 and 0.35, a range known to yield the fastest convergence.
+\end{enumerate}
+
+I used a very similar algorithm but with some modifications to increase the efficiency, we will discuss this in the next section.
+
+\subsubsection{Overall view}
+
+\medskip
+
+The process begins with an initial guess for the parameters of the model, which describe a geometric structure with specific width and height parameters. The model data is then transformed into the frequency domain using a Fourier Transform, and this transformed data is compared with the experimental data to optimize the fit by adjusting the parameters and reducing the error between the simulated and experimental data.
+
+\medskip
+
+The error between the experimental and simulated data is quantified using an error metric that measures the goodness-of-fit by comparing the logarithms of the simulated and experimental intensity profiles. If the error is within a tolerable range, the fit is considered acceptable, and the best-fit model is extracted. This involves identifying the parameters that provide the best match to the experimental data.
+
+\medskip
+
+To quantify the uncertainties associated with the fitted parameters, a Monte Carlo approach is employed. This involves exploring the possible parameter space through a series of stochastic simulations. The MCMC method is used to sample the parameter space, ensuring that the distribution of the sampled parameters reflects their likelihood given the data. During the MCMC process, initial samples are generated from the best-fit parameters, new samples are proposed by perturbing the current parameters, and the Metropolis-Hastings criterion is used to decide whether to accept or reject the new samples based on their goodness-of-fit compared to the previous samples. This process is repeated until a sufficient number of samples are collected, ensuring the sampled parameter distribution converges to the true posterior distribution.
+
+\medskip
+
+The final step involves calculating the error bars (uncertainties) for the fitted parameters based on the Monte Carlo samples, providing 95\% confidence intervals and a robust measure of the reliability of the fitted model parameters. By combining CMAES for initial parameter optimization and MCMC for uncertainty quantification, the algorithm offers a robust approach to model fitting, ensuring both optimal parameter estimation and reliable uncertainty analysis.
+
+\medskip
+
+Here is a figure that shows the overall view of the CD-SAXS algorithm:
+
+\begin{figure}[h]
+    \centering
+    \begin{subfigure}[b]{1\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{images/cmaes_overall.png}
+    \end{subfigure}
+    \\
+    \begin{subfigure}[b]{1\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{images/mcmc_overall.png}
+    \end{subfigure}
+    \caption{This algorithm integrates CMAES for initial parameter optimization and MCMC for uncertainty quantification. By combining these methods, the algorithm provides a robust approach to model fitting, ensuring both optimal parameter estimation and reliable uncertainty analysis.}
+    \label{fig:cd_saxs_algo}
+\end{figure}
+
+\FloatBarrier
+
+
