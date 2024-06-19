@@ -54,7 +54,7 @@ periodic array of nanostructures acts like one. This technique excels at reconst
 intricate shapes smaller than 15 nm and with spacings around 30 nm, dimensions crucial for 
 the semiconductor industry. \cite{first_cdsaxs_article}
 
-\subsection{Scattering Model}
+\subsection{Scattering Model} \label{sec:scattering_model}
 
 \medskip
 We can represent the diffraction of a collimated X-ray beam by:
@@ -83,6 +83,7 @@ these can be represented as a stack of trapezoids.
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.2\textwidth]{images/trapezoid.png}
+    \label{fig:trapezoid_model}
     \caption{Cross-section of a nanostructure line represented as a stack of trapezoids.}
     
 \end{figure}
@@ -90,6 +91,7 @@ We can calculate the analytical fourier transform of a trapezoidal shape to use 
 can be calculated is given by expression \cite{sunday_2015}:
 \begin{equation}
     F\left(q_{x}, q_{z}\right)=\frac{1}{q_{x}}\left[-\frac{m_{1}}{t_{1}} e^{-i q_{x}\left(\frac{\omega_{0}}{2}\right)}\left(1-e^{-i h\left(\frac{q_{x}}{m_{1}}+q_{z}\right)}\right)\right. \\ +\frac{m_{2}}{t_{2}} e^{-i q_{x}\left(\frac{\omega_{0}}{2}\right)}\left(1-e^{\left.-i h\left(\frac{q_{x}}{m_{2}}+q_{z}\right)\right)}\right]
+    \label{eq:trapezoidal_ft}
 \end{equation}
 where,
 

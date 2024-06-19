@@ -148,9 +148,72 @@ During my project there were three main models that are planned to be integrated
 In this section I will discuss the idea behind each model and how they were or are in the process of being implemented in the code.
 For each model, We will also shortly discuss the lithography technique and/or fault that it is designed to simulate.
 
-\subsubsection{Stacked Trapezoid Model}
+\subsubsection{Breif overview of photoresist lithography}
+
+These models are build to simulate the simple structure obtained through techniques like photoresist 
+lithography. It is a technique used to fabricate micro and nano scale structures on substrates. 
+It works by first coating the wafer with a light-sensitive material called photoresist. Then, a patterned
+ mask blocks light from specific regions of the photoresist. 
+ \begin{figure}[h]
+    \centering
+    \includegraphics[width=0.4\textwidth]{images/photo_resist.png}
+    \caption{Schematic of the photoresist lithography process (taken from wikipedia).}
+    \label{fig:lithography}
+ \end{figure}
+
+ \FloatBarrier
+
+ Exposing the wafer to light triggers a 
+ chemical change in the exposed photoresist, making it either soluble (positive tone) or insoluble 
+ (negative tone) in a developer solution. This developer removes the unwanted photoresist, 
+ revealing the desired circuit pattern on the underlying wafer. Optionally, etching can be used to 
+ create physical features by removing exposed areas of the substrate.
+
+While developing our model, we consider lines of nanostructures on a substrate (see figure \ref{fig:lines}) obtained through this process.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.3\textwidth]{images/lines_modeled.png}
+    \caption{Image obtained with a scanning electron microscope in 
+      top view of the structure for modelling. In red, the average signal over the length of the lines is superimposed.\cite{these_reche}}
+    \label{fig:lines}
+\end{figure}
+
+\section{Stacked Trapezoid Model}
+
+If we look at the cross section of the lines in figure \ref{fig:lines}, we can see that they can be
+approximated by stacked trapezoids. This is the idea behind this model.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.4\textwidth]{images/trap_model.PNG}
+    \caption{Tunneling electron microscope image of the cross section of the lines.\cite{phd_freychet}}
+    \label{fig:trapezoid}
+\end{figure}
+
+Figure \ref{fig:trapezoid_model} shows the approximation of the model that we are trying to simulate. Constant height or 
+sets of heights and side wall angles ($\beta$) of the trapezoids are provided as input to the model. Thus we know the z coordinates
+of the each corner of the trapezoids. The x coordinate for each can be calcualted using the following formula:
+
+\medskip
+
+\begin{equation}
+    x_{i} = x_{i-1} + \frac{z_{i} - z_{i-1}}{\tan(\beta)}
+\end{equation}
+
+\medskip
+
+Like discussed in section \ref{sec:scattering_model} we can then use the equation \ref{eq:trapezoidal_ft} to calculate
+the fourier transform of one trapezoid and then sum the fourier transforms of all the 
+trapezoids to get the diffraction pattern.
+
+This model serves as the base for other models to use upon. Other models will inherit 
+or or build on top of the \textit{StackedTrapezoidSimulation} and \textit{StackedTrapezoidGeometry} classes.
 
 
+
+
+\FloatBarrier
 
 
 
