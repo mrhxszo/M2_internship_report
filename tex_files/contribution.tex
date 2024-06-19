@@ -207,7 +207,16 @@ Like discussed in section \ref{sec:scattering_model} we can then use the equatio
 the fourier transform of one trapezoid and then sum the fourier transforms of all the 
 trapezoids to get the diffraction pattern.
 
-This model serves as the base for other models to use upon. Other models will inherit 
+\medskip
+
+This model has its flaws, as it is a simplification of the real structure. The real structure is more complex and
+isn't made of perfect trapezoids. However, this model is a good starting point for the simulations. And as we increase the
+number of trapezoids we get closer to the real structure. But it also implies greater computational cost.
+So, a trade-off between accuracy and computational cost has to be made.
+
+\medskip
+
+Nevertheless, this model serves as the base for other models to use upon. Other models will inherit 
 or or build on top of the \textit{StackedTrapezoidSimulation} and \textit{StackedTrapezoidGeometry} classes.
 
 
