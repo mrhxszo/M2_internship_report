@@ -142,11 +142,33 @@ parallelization by allowing developers to focus on specific areas of improvement
   run faster and more efficiently through advanced numerical methods and parallel 
   computing techniques. This is particularly beneficial for handling large datasets or complex simulations that demand significant computational resources. By isolating the simulation component, developers can experiment with and implement various optimization strategies, ensuring that the component runs as efficiently as possible.
 
+\medskip
+
 \subsection{Simulation Models}
 
-During my project there were three main models that are planned to be integrated with the application. 
-In this section I will discuss the idea behind each model and how they were or are in the process of being implemented in the code.
-For each model, We will also shortly discuss the lithography technique and/or fault that it is designed to simulate.
+In the realm of nano scale fabrication, techniques like photoresist lithography stands out as a pivotal technique. To model the structures 
+resulting from photoresist lithography, we can observe that many of these structures can be approximated by stacked trapezoids. 
+This simplification forms the foundation of our modeling approach. By considering the cross-sectional shapes of these lines, which 
+closely resemble trapezoids, we can create computational models that simulate the fabrication process and predict the resulting 
+geometries.
+
+\medskip
+
+Our models aims to balance accuracy and computational efficiency. While real structures are complex and not perfectly trapezoidal, 
+using a series of stacked trapezoids provides a practical approximation that can be refined as needed. This approach serves as a robust
+starting point for simulations, allowing us to incrementally increase the number of trapezoids to better match the real structures.
+
+\medskip
+
+Furthermore, we extend this model to account for rounded corners, which are common in actual fabricated structures. By approximating 
+these rounded corners with smaller trapezoids, we can enhance the accuracy of our simulations without significantly increasing 
+computational costs. Future developments may explore more direct modeling techniques, such as using sections of circles, to further
+improve the fidelity of our models.
+
+\medskip
+
+Lastly, we introduce the overlay model, which simulates the alignment of different layers on a wafer.
+
 
 \subsubsection{Breif overview of photoresist lithography}
 
@@ -169,6 +191,8 @@ It works by first coating the wafer with a light-sensitive material called photo
  revealing the desired circuit pattern on the underlying wafer. Optionally, etching can be used to 
  create physical features by removing exposed areas of the substrate.
 
+ \medskip
+
 While developing our model, we consider lines of nanostructures on a substrate (see figure \ref{fig:lines}) obtained through this process.
 
 \begin{figure}[h]
@@ -179,10 +203,11 @@ While developing our model, we consider lines of nanostructures on a substrate (
     \label{fig:lines}
 \end{figure}
 
-\section{Stacked Trapezoid Model}
+\subsubsection{Stacked Trapezoid Model}
 
-If we look at the cross section of the lines in figure \ref{fig:lines}, we can see that they can be
-approximated by stacked trapezoids. This is the idea behind this model.
+A close examination of the cross-section of the lines in Figure \ref{fig:lines} reveals that their shapes can be closely approximated by stacked trapezoids. This crucial observation forms the foundation of our modeling approach.
+
+\medskip
 
 \begin{figure}[h]
     \centering
@@ -191,9 +216,13 @@ approximated by stacked trapezoids. This is the idea behind this model.
     \label{fig:trapezoid}
 \end{figure}
 
-Figure \ref{fig:trapezoid_model} shows the approximation of the model that we are trying to simulate. Constant height or 
-sets of heights and side wall angles ($\beta$) of the trapezoids are provided as input to the model. Thus we know the z coordinates
-of the each corner of the trapezoids. The x coordinate for each can be calcualted using the following formula:
+Figure \ref{fig:trapezoid_model} illustrates the approximation of the model we aim to simulate. 
+The model inputs include a constant height or sets of heights, sidewall angles ($\beta$), and the
+ bottom width of the trapezoids. By allowing variable heights for each trapezoid layer, we can 
+ achieve better control over the structure, albeit at the cost of increasing the number of 
+ parameters to fit. The user can determine the height parameter based on their specific needs. 
+ Given the z-coordinates of each corner of the trapezoids, the x-coordinate for each can be 
+ calculated using the following formula:
 
 \medskip
 
@@ -203,28 +232,92 @@ of the each corner of the trapezoids. The x coordinate for each can be calcualte
 
 \medskip
 
-Like discussed in section \ref{sec:scattering_model} we can then use the equation \ref{eq:trapezoidal_ft} to calculate
-the fourier transform of one trapezoid and then sum the fourier transforms of all the 
-trapezoids to get the diffraction pattern.
+As discussed in Section \ref{sec:scattering_model}, we can use Equation \ref{eq:trapezoidal_ft} 
+to calculate the Fourier transform of a single trapezoid and then sum them all up of 
+all the trapezoids to obtain the diffraction pattern.
 
 \medskip
 
-This model has its flaws, as it is a simplification of the real structure. The real structure is more complex and
-isn't made of perfect trapezoids. However, this model is a good starting point for the simulations. And as we increase the
-number of trapezoids we get closer to the real structure. But it also implies greater computational cost.
-So, a trade-off between accuracy and computational cost has to be made.
+This model has its limitations, as it simplifies the real structure. The actual structure is more 
+complex and does not consist of perfect trapezoids. Additionally, a more detailed model would 
+entail higher computational costs. Therefore, a balance between accuracy and computational cost 
+is necessary. Despite these limitations, this model provides a solid foundation for simulations. 
+By increasing the number of trapezoids, we can approximate the real structure more closely. Future
+models will inherit from or build upon the \textit{StackedTrapezoidSimulation} and 
+\textit{StackedTrapezoidGeometry} classes.
 
 \medskip
 
-Nevertheless, this model serves as the base for other models to use upon. Other models will inherit 
-or or build on top of the \textit{StackedTrapezoidSimulation} and \textit{StackedTrapezoidGeometry} classes.
+\subsubsection{Rounded corners model}
 
+The rounded corners model is an extension of the stacked trapezoid model. It is designed to 
+simulate the rounded corners often found in real structures (see Figure \ref{fig:trapezoid}). 
+Each corner of the trapezoid is rounded using a circle, with the radius of each circle provided 
+as an input by the user and fitted later. Once the radii are known, the corners are approximated 
+by dividing them into even smaller trapezoids. This allows us to use the same diffraction code written for the
+ stacked trapezoid model to simulate the rounded corners. With this model, we can simulate the 
+ diffraction pattern more accurately, reflecting the real structure more closely.
 
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/rounded.PNG}
+    \caption{Rounded corners model fitted on top of the scanning electron microscope image.}
+    \label{fig:rounded_corners}
+\end{figure}
 
+\medskip
+
+While this model hasn't been implemented yet, a similar codebase already exists. This existing
+code provides a strong foundation, potentially making implementation a smoother process.
+
+\medskip
+
+Simulating rounded corners with a large number of trapezoids significantly increases the 
+computational cost of the model. To address this, exploring alternative approaches for representing 
+rounded corners is a promising avenue for future development. One potential solution lies in 
+directly incorporating a section of a circle into the model. This could involve calculating the 
+direct Fourier transform of the circular segment and then summing the resulting components to obtain the 
+diffraction pattern. This method has the potential to significantly reduce the computational 
+complexity compared to using a multitude of trapezoids.
+
+\subsubsection{Overlay model}
+
+Silicon wafers are built layer-by-layer through a series of steps called photolithography. 
+Each layer involves depositing a specific material (like a metal for contacts or a 
+special material for transistors) in a defined pattern. Precise alignment between these 
+layers is crucial for the final device to function properly. This means features like 
+contacts, lines, and transistors must be perfectly positioned relative to each other 
+on the wafer.
+
+\medskip
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\textwidth]{images/overlay.PNG}
+    \caption{Overlay model.}
+    \label{fig:overlay}
+\end{figure}
 
 \FloatBarrier
 
+The overlay model is designed to simulate the critical aspect of layer alignment during wafer 
+fabrication. This model builds upon the concept of the stacked trapezoid model, but extends it to 
+capture misalignment effects. It incorporates two sets of trapezoids: one set for each layer. The 
+key difference lies in the positioning of the second layer's trapezoids. These are shifted by a 
+specific amount, called the Top Critical Dimension (Top CD), in the x-direction. This shift 
+represents potential misalignment between layers.
 
+\medskip
+
+To calculate the coordinates of the second layer's trapezoids, we can leverage the same method 
+used for the stacked trapezoid model. However, for the second layer, an additional x-axis shift 
+equal to the Top CD value is applied.
+
+\medskip
+
+To add the overlay model to the code, we inherit from the \textit{StackedTrapezoidSimulation} and \textit{StackedTrapezoidGeometry} classes.
+The \textit{StackedTrapezoidGeometry} class will be modified to include the shift in the x direction for the second layer. This shift is entered by the
+user and is fitted later on.
 
 \subsection{Implementation of MCMC}
 \subsection{Optimisation and parrellelisation}
