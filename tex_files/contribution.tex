@@ -381,5 +381,73 @@ After extracting the chain from the MCMC algorithm, we perform a statistical ana
 In conclusion, the implementation of the MCMC method using the \textit{emcee} package has proven to be an effective approach for quantifying the uncertainty in the parameters of our models. By leveraging the flexibility and advanced features of \textit{emcee}, such as the stretch move and autocorrelation time calculation, we have enhanced the robustness and efficiency of our statistical analysis. The normalization and rescaling strategy we employed allows for better control over the parameter space, ensuring a more focused exploration around the best fit obtained from the CMAES algorithm. This method not only provides detailed statistical insights into the model parameters but also sets a solid foundation for future improvements and extensions. The versatility and precision of the MCMC method make it a valuable tool in the continuous effort to refine our simulations and better understand the underlying physical structures.
 
 
-\subsection{Optimisation and parrellelisation}
+\subsection{Parallelization and GPU Acceleration}
+
+The simulation of diffraction patterns can be computationally intensive, especially when dealing with large datasets or complex models. Given that the code is written in Python, which is inherently slower than compiled languages like C++, optimizing for performance is crucial. One effective strategy for improving performance is parallelization. By distributing the computational workload across multiple cores or processors, we can significantly reduce simulation time. In this section, we will briefly discuss parallelization and overview the strategies for parallelization on both GPU and CPU.
+
+\medskip
+
+\subsubsection{Overview of Parallelization}
+
+Parallelization involves breaking down tasks into independent units. Instead of performing a complex calculation in one go, the task is distributed across multiple processors for simultaneous processing. This approach leverages the power of modern hardware, with multiple cores on a single processor or distributed computing systems. The key is to achieve the right balance: tasks must be independent to avoid communication overhead yet large enough for efficient processing. While challenges exist, such as managing communication and limited parallelizability for certain problems, parallelization is a game-changer in fields like scientific computing, machine learning, and video processing.
+
+\medskip
+
+If we can use the GPU to perform calculations in parallel, we can achieve a significant speedup. However, there is a catch: the GPU is not as flexible as the CPU. It is designed for parallel processing of large amounts of data, making it ideal for tasks like matrix multiplication. However, the GPU is not well-suited for tasks that require branching or recursion, as these can slow down processing speed. Therefore, to take full advantage of the GPU, we need to structure our code in a way that aligns with the GPU's strengths.
+
+\medskip
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/gpu_vs_cpu.png}
+    \caption{Comparison between GPU and CPU. The GPU has more cores but is less flexible than the CPU, making it suitable for simpler parallel tasks. \cite{gpu_vs_cpu}}
+\end{figure}
+
+\subsubsection{Parallelization Strategies}
+
+To parallelize the code, we need to identify the independent parts. In both the \textit{cmaes} and \textit{mcmc} algorithms, a population is generated for each generation (or step), and each individual in the population is evaluated independently to calculate the goodness of fit. Since one generation depends on the best fit of the previous generation, parallelizing the generation is not possible. However, parallelizing the evaluation of individuals in the population is possible.
+
+\medskip
+
+Initially, to avoid the complexity of GPU parallelization, we used the multiprocessing library in Python to parallelize the code. This library allows us to run multiple processes in parallel, each on a different core. We used the \textit{Pool} class from the multiprocessing library to create a pool of workers, each evaluating the goodness of fit. This approach reduced computation time significantly, as multiple individuals could be evaluated simultaneously.
+
+\medskip
+
+However, the code still contained many for-loops that could be parallelized using NumPy operations. NumPy, being a highly optimized library for numerical operations, was used to further optimize the code. Wherever for-loops could be replaced by NumPy operations, we did so, further reducing computation time. The major challenge was that the quantities we wanted to perform operations on were not of the same shape, requiring the use of NumPy broadcasting to perform the operations (see Figure \ref{fig:broadcasting} for an example).
+
+\medskip
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.7\textwidth]{images/multiprocessing.png}
+    \caption{Multiprocessing used to improve the execution time of the code for the \textit{cmaes} algorithm. The generation was fixed to 20.}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.7\textwidth]{images/broadcasting.png}
+    \caption{NumPy broadcasting used to perform operations on arrays of different shapes (image taken from NumPy documentation).}
+    \label{fig:broadcasting}
+\end{figure}
+
+\FloatBarrier
+
+After this step, it was easier to parallelize the code for GPU. As the code was already vectorized, we used the CuPy library, a GPU-accelerated version of NumPy. CuPy is built on top of CUDA, a parallel computing platform and application programming interface created by Nvidia. CuPy uses CUDA libraries like cuBLAS, cuDNN, cuFFT, cuSPARSE, etc., which are highly optimized for parallel computing (more information can be found in its documentation page \cite{cupy}).
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/gpu.png}
+    \caption{CuPy used to parallelize the code. The number of iterations per second in the parallel version is much higher. (This test was performed on CEA aar164 server Intel(R) Xeon(R) Platinum 8362 CPU @ 2.80GHz, 128 cores, and NVIDIA A100 80GB GPU)}
+    \label{fig:cupy}
+\end{figure}
+
+\FloatBarrier
+
+However, we are essentially replacing NumPy operations with CuPy operations, some operations are more efficient in NumPy than in CuPy. For example, cumulative sum in CuPy is slower than in NumPy because the nature of the operation is not parallelizable. However, the calculation of the analytical Fourier transform and the calculation of log error are much faster in CuPy than in NumPy. Thus, we still need to identify the parts of the code that are slowing down the execution time due to communication overhead and replace them with NumPy operations. This is perhaps why we don't see a significant speedup in the execution time in Figure \ref{fig:cupy}. However, the code is now ready to be used on a GPU and can be further optimized. This will be the next step in the project.
+
+\medskip
+
+In conclusion, parallelization and GPU acceleration have significantly enhanced the performance of our diffraction pattern simulation and fitting code. By leveraging the multiprocessing library and NumPy optimizations, we achieved considerable speedups in CPU-based parallelization. Transitioning to GPU parallelization using CuPy further improved execution times, although some operations still perform better in NumPy due to their non-parallelizable nature. Future work will focus on identifying and optimizing these bottlenecks to fully harness the power of GPU acceleration. The groundwork laid here provides a robust foundation for further improvements and scalability in our computational simulations.
+
+
 \subsection{On the fly uncertainity estimation}
