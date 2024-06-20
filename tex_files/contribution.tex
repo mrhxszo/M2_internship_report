@@ -319,6 +319,67 @@ To add the overlay model to the code, we inherit from the \textit{StackedTrapezo
 The \textit{StackedTrapezoidGeometry} class will be modified to include the shift in the x direction for the second layer. This shift is entered by the
 user and is fitted later on.
 
-\subsection{Implementation of MCMC}
+\subsection{Implementation of MCMC to Measure Uncertainty}
+
+As discussed in Section \ref{sec:mcmc_cdsaxs}, after finding the best fit for a model using the \textit{cmaes} algorithm, it is crucial to determine the uncertainty in the fitted parameters. This is where the \textit{mcmc} method of the \textit{Fitter} class becomes essential. While we follow a similar approach to the algorithm described in Section \ref{sec:mcmc_cdsaxs}, there are key differences that will be discussed in this section, along with the method's implementation and its outputs.
+
+\medskip
+
+We utilize the \textit{emcee} Python package \cite{emcee} to implement this method. This package is well-regarded for its ease of use and effective implementation of the MCMC algorithm, having been referenced in several scientific papers \cite{emcee_refed}. A significant advantage of \textit{emcee} is the flexibility it offers in choosing the type of moves for the MCMC algorithm. Unlike the Metropolis-Hastings criterion used in Section \ref{sec:mcmc_cdsaxs}, \textit{emcee} employs the stretch move by default, which has been shown to achieve faster convergence \cite{goodman2010_strech_move,emcee}. The stretch move uses the following formula to determine whether to accept or reject a move:
+
+\begin{equation}
+    P_{i} = e^{Z^{1-N} (GF_{i} -GFB)}
+\end{equation}
+
+where \(P_{i}\) is the probability of accepting the move, \(N\) is the number of parameters, \(GF_{i}\) is the current goodness of fit, and \(GFB\) is the goodness of fit of the initial fit. \(Z\) is drawn randomly from the distribution:
+
+\begin{equation}
+    Z \in g(z) \propto 
+    \begin{cases} 
+      \frac{1}{z} & \text{for } z \in \left[\frac{1}{a}, a\right] \\
+      0 & \text{otherwise}
+    \end{cases}
+\end{equation}
+
+\medskip
+
+In addition, \textit{emcee} includes a built-in function to calculate the autocorrelation time of the chain, which helps determine which part of the chain to use for statistical analysis. We implemented the \textit{mcmc} method using the default stretch move of \textit{emcee}, but also provided options to use other moves like Metropolis-Hastings and Gaussian moves.
+
+\medskip
+
+For the implementation, the user needs to provide the following inputs:
+\begin{itemize}
+    \item The number of parameters
+    \item $\sigma$, which is the standard deviation of the initial walker population
+    \item The number of steps to run the MCMC algorithm
+    \item The number of walkers
+    \item A directory to save the statistical analysis information(optional)
+\end{itemize}
+
+\medskip
+
+Unlike previous approaches \cite{sunday2016evaluation}, we do not vary the model parameters directly. Instead, we use a normalized space where variations range between $-\sigma$ and $\sigma$. These normalized values are then rescaled to the actual parameter values using the following formula:
+
+\begin{equation}
+    \text{Rescaled Params} = \text{Normalized Params} \times \text{Allowed Range} + \text{Best Fit Cmaes}
+\end{equation}
+
+This approach provides better control over the parameter range, preventing unnecessary exploration of regions far from the best fit. It also allows the best fit obtained from the CMAES algorithm to serve as the mean of the initial walker population.
+
+\medskip
+
+After extracting the chain from the MCMC algorithm, we perform a statistical analysis. This includes calculating the mean, standard deviation, total number of individuals in the chain, minimum and maximum parameter values, lower and upper confidence intervals as specified by the user, and the uncertainty in the parameters, defined as the difference between the upper and lower confidence intervals.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/mcmc_out.png}
+    \caption{Example of output statistics file of the MCMC algorithm. The model used was the stacked trapezoid model.}
+\end{figure}
+
+\FloatBarrier
+
+In conclusion, the implementation of the MCMC method using the \textit{emcee} package has proven to be an effective approach for quantifying the uncertainty in the parameters of our models. By leveraging the flexibility and advanced features of \textit{emcee}, such as the stretch move and autocorrelation time calculation, we have enhanced the robustness and efficiency of our statistical analysis. The normalization and rescaling strategy we employed allows for better control over the parameter space, ensuring a more focused exploration around the best fit obtained from the CMAES algorithm. This method not only provides detailed statistical insights into the model parameters but also sets a solid foundation for future improvements and extensions. The versatility and precision of the MCMC method make it a valuable tool in the continuous effort to refine our simulations and better understand the underlying physical structures.
+
+
 \subsection{Optimisation and parrellelisation}
 \subsection{On the fly uncertainity estimation}
