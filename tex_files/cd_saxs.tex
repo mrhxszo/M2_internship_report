@@ -3,15 +3,15 @@
 
 \medskip
 
-Miniaturizing transistors, the building blocks of integrated circuits, is getting
+Miniaturizing transistors \color{red} I suggest you add a figure with a microscope image of a transistor and a microscope image of a typical sample we measure with SAXS, an array of line \color{black}, the building blocks of integrated circuits, is getting
 tougher for the semiconductor industry. Shrinking their size and spacing (pitch)
 brings not only manufacturing hurdles but also a metrology problem. Precisely
 measuring these features during production is crucial for high-quality chips.
 Existing in-line metrology techniques, like optical critical-dimension (OCD)
 scatterometry and critical-dimension scanning electron microscopy (CD-SEM), are
 nearing their limits \cite{SEM_resolution,OCD_resolution}. OCD struggles with limitations inherent to light and the
-ever-shrinking features. CD-SEM offers valuable insights but is restricted by
-the sampling area. To overcome these obstacles, the industry is exploring X-ray-based metrology.
+ever-shrinking features. CD-SEM offers valuable insights because it provides an image of the sample but is restricted by
+the sampling area and also its resolution. To overcome these obstacles, the industry is exploring X-ray-based metrology.
 X-rays have much shorter wavelengths than the features being measured, allowing
 for more precise analysis. Additionally, they are sensitive to variations in
 composition, providing a richer data set.
@@ -20,31 +20,16 @@ composition, providing a richer data set.
 
 Early research on X-ray characterization of patterned nanostructures used reflection
 methods like X-ray diffraction (XRD) and grazing-incidence small-angle X-ray scattering (GISAXS). 
-These techniques demonstrated X-ray's sensitivity to features' shape and spacing.
-Furthermore, X-rays can probe buried features due to their sensitivity to composition via electron density. For instance, a GaInAs/InP multilayer was studied with high-resolution XRD, revealing 
-sensitivity to both the grating and strain between layers \cite{Baumbach_Lübbert_Gailhanou_2000}.
+These techniques demonstrated X-ray's sensitivity to features shape and spacing.
+Furthermore, X-rays can probe buried features due to their sensitivity to electron density contrast. For instance, a GaInAs/InP multilayer was studied with high-resolution XRD, revealing 
+the sensitivity to both the grating and strain between layers \cite{Baumbach_Lübbert_Gailhanou_2000}.
 
 \medskip
 
-For sub-100 nm features, small-angle scattering methods like GISAXS become more practical. 
-GISAXS examines nanostructures across large areas, making it a potential metrology tool 
-for semiconductors. It uses X-rays near the critical angle of the probed film
-resulting in a large sampling area and statistically significant data. This large area allows for faster measurements, enabling in situ kinetic studies.
+\color{red} I would reverse how you introduce SAXS and GISAXS. SAXS was done first. People started with SAXS and it works well except that the beam needs to go through the Si wafer that is not easy (most of the x-rays are absorbed) and that is why you need to go to synchrotron \color{black}
 
-\medskip
-
-However, GISAXS limitations include a large spot size (50-100 mm wide by 5-10 mm long) and
-computational challenges for complex nanostructure modeling. This limits its use for 
-semiconductor metrology to simple, large-area patterns like memory arrays (Hofmann et al.,
-2009; Scholze et al., 2011). Logic devices require smaller probing areas due to test structure 
-size and the complexity of the multicomponent, 3D nanostructures. \cite{phd_freychet}
-
-\medskip
-
-Unlike other X-ray techniques, CDSAXS uses a transmission geometry, enabling a much smaller
-spot size compared to methods like GISAXS. This allows for more precise measurements on smaller
-features. Studies have shown CDSAXS's effectiveness in characterizing the shape and spacing of
-nanometer-sized patterns \cite{sunday_2015}.
+CDSAXS uses a transmission geometry, sending the beam through the sample and the 750 micrometer-thick silicon wafer. The x-ray spot size varying between 10-1000 $\mu$m, it enable the measurment of small patterned areas. 
+Studies have shown CDSAXS's effectiveness in characterizing the shape and spacing of nanometer-sized patterns \cite{sunday_2015}.
 
 \medskip
 CDSAXS  utilises variable-angle transmission scattering. By rotating the sample, it can probe the vertical profile of the nanostructures. This allows 
@@ -53,6 +38,28 @@ We can think of it as a diffraction experiment for single crystals, but instead 
 periodic array of nanostructures acts like one. This technique excels at reconstructing 
 intricate shapes smaller than 15 nm and with spacings around 30 nm, dimensions crucial for 
 the semiconductor industry. \cite{first_cdsaxs_article}
+
+\medskip
+While CDSAXS was demonstrated very useful, the main limitation is inherent to its geometry. The beam needs to go thourgh the 750 micrometer-thick silicon wafer.
+This is critical for x-ray energy below \SI{17}{keV} because a major part of the beam is absorbed. The first CDSAXS studies were conducted in synchrotron where the energy
+of the x-rays can be tuned and where the brillance is the highest. For laboratory sources, it is currently still an issue since there is no source with enough photons to enable
+efficient laboratory measurments. This is a major constrain for the spread of CD-SAXS where a tool in the factory is required to have a direct control during the production. 
+
+\medskip
+A possibility to go around the absorption limitation is to perform grazing-incidence experiment where the beam is now reflected at the surface of the sample. This technique, 
+called GISAXS become more relevant. It uses X-rays near the critical angle of the probed film resulting in a large sampling area and statistically significant data. This large area allows for faster measurements, enabling in situ kinetic studies.
+It has the same resolution of CDSAXS but enable to examine nanostructures across large areas, i.e. the beam footprint on the sample surface 
+being the beam size divided by the sinus of the incident angle of the beam on the sample. For GISAXS, the incident angle is usually around 0.3 deg, making a 10 $\mu$m beam footprint equal to 2 mm   
+for semiconductors. 
+
+While probing large areas is interesting for some application such as the study of polymer for example, it is a limit for 
+the semiconductor metrology. Indeed, the patterned areas are only few micrometers wide except for some specific applications like memory arrays (Hofmann et al.,
+2009; Scholze et al., 2011). Logic devices require smaller probing areas due to test structure 
+size and the complexity of the multicomponent, 3D nanostructures. \cite{phd_freychet}
+
+\medskip
+
+
 
 \subsection{Scattering Model} \label{sec:scattering_model}
 
