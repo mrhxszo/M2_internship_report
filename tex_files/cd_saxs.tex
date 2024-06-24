@@ -54,6 +54,75 @@ periodic array of nanostructures acts like one. This technique excels at reconst
 intricate shapes smaller than 15 nm and with spacings around 30 nm, dimensions crucial for 
 the semiconductor industry. \cite{first_cdsaxs_article}
 
+
+\subsection{Experimental Setup}
+
+During this project, I had the opportunity to work and observe how CDSAXS 
+measurements are performed at the European Synchrotron Radiation Facility (ESRF)
+in Grenoble, France. The ESRF is a world-renowned research facility that provides
+intense X-ray beams for a wide range of scientific experiments. Specifically,
+I worked with the BM02 beamline, which is dedicated to X-ray scattering and
+   diffraction experiments.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.6\textwidth]{images/esrf.jpg}
+\caption{The European Synchrotron Radiation Facility (ESRF) in Grenoble, France. (credit: ESRF/Jocelyn Chavy)}
+\label{fig
+}
+\end{figure}
+
+The X-ray source obtained from the synchrotron is monochromatized and then focused using
+various optical elements. The beam is then directed towards the sample. The 
+sample is mounted on a device that allows for rotation and translation in all 
+three dimensions. Once the alignment is complete, the sample is fixed in the
+vertical direction and rotated in the horizontal plane, within a range of -60
+to 60 degrees. The scattered X-rays are collected through a detector in a 
+vacuum chamber. The schematic of the experiment is shown in Figure \ref{fig:exp_setup},
+and the actual experimental setup is depicted in Figure \ref{fig:exp_setup_real}.
+
+\medskip
+
+One of the major challenges in the experiment is the alignment of the sample. 
+Since the sample is rotated in the horizontal plane, it needs to be aligned 
+such that the rotation axis is perpendicular to the beam. This is achieved by 
+aiming a camera at the sample and focusing on the beam's position. A short 
+measurement is then performed to observe the diffraction pattern of the sample.
+ The rotation axis is adjusted until the diffraction pattern is horizontal and 
+ centered.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.6\textwidth]{images/photo_exp.jpg}
+\caption{Picture of the experimental setup at the BM02 beamline at ESRF.}
+\label{fig:exp_setup_real}
+\end{figure}% talk about the alignement problem and how it was solved
+\begin{figure}[h]
+    \centering
+    \begin{subfigure}[b]{0.8\textwidth}
+        \includegraphics[width=\textwidth]{images/cdsaxs_diff.png}
+        \caption{experimental setup}
+        \label{fig:exp_setup}
+    \end{subfigure}
+    
+    \begin{subfigure}[b]{0.4\textwidth}
+        \includegraphics[width=\textwidth]{images/intensity_qz.png}
+        \caption{Intensity vs $Q_z$}
+    \end{subfigure}
+    
+    \caption{In a is the schematic of the CD-SAXS instrument layout. The X-ray beam (thick solid lines) is transmitted through the 
+    patterned sample. Scattered intensity (I) is measured by a 2D detector as a function of scattering angle $(2\theta)$ 
+    and converted to $I(Q_{x})$, where $Q_{x}$ is defined in the text. Measurements are performed at various sample incidence 
+    angles $(\theta')$. In b After conversion from the $(Q_{x},\omega)$
+    plane, the intensities
+   from a trapezoidal cross section would appear as predicted in
+   the model calculation on b, plotted as I as a function of the
+   Fourier component, $Q_{Z}$.}
+   \label{fig:isolated_line}
+\end{figure}
+
+\FloatBarrier
+
 \subsection{Scattering Model} \label{sec:scattering_model}
 
 \medskip
@@ -126,30 +195,6 @@ Hence,
 \end{equation}
 
 where $DW$ is the Debye-Waller factor.
-
-\subsection{Experimental setup}
-\begin{figure}[h]
-    \centering
-    \begin{subfigure}[b]{0.8\textwidth}
-        \includegraphics[width=\textwidth]{images/cdsaxs_diff.png}
-        \caption{experimental setup}
-    \end{subfigure}
-    
-    \begin{subfigure}[b]{0.4\textwidth}
-        \includegraphics[width=\textwidth]{images/intensity_qz.png}
-        \caption{Intensity vs $Q_z$}
-    \end{subfigure}
-    
-    \caption{In a is the schematic of the CD-SAXS instrument layout. The X-ray beam (thick solid lines) is transmitted through the 
-    patterned sample. Scattered intensity (I) is measured by a 2D detector as a function of scattering angle $(2\theta)$ 
-    and converted to $I(Q_{x})$, where $Q_{x}$ is defined in the text. Measurements are performed at various sample incidence 
-    angles $(\theta')$. In b After conversion from the $(Q_{x},\omega)$
-    plane, the intensities
-   from a trapezoidal cross section would appear as predicted in
-   the model calculation on b, plotted as I as a function of the
-   Fourier component, $Q_{Z}$.}
-   \label{fig:isolated_line}
-\end{figure}
 
 \subsection{Fitting Algorithm}
 
