@@ -6,7 +6,7 @@ After outlining the context of the work-study program and describing the techniq
 on, it is finally time to discuss my contributions to the project. First, I will explore 
 the design I implemented and explain why this specific design was chosen. Next, we will 
 examine the simulation models I developed and their applications. Following this, I will 
-detail the optimization and parallelization of the code that was done to enhance its performance. 
+detail the optimization and parallelisation of the code that was done to enhance its performance. 
 Finally, we will discuss how this optimized code could be utilised to estimate uncertainty
 in real-time during synchrotron experiments.
 
@@ -141,12 +141,12 @@ This design choice significantly enhances the system's flexibility and scalabili
 \medskip
 
 The decoupling of components also facilitates optimization and 
-parallelization by allowing developers to focus on specific areas of improvement without
- cross-component interference. For example, the simulation component can be optimized to
-  run faster and more efficiently through advanced numerical methods and parallel 
-  computing techniques. This is particularly beneficial for handling large datasets or complex simulations that demand significant 
-  computational resources. By isolating the simulation component, developers can experiment with and implement various optimization strategies, 
-  ensuring that the component runs as efficiently as possible.
+parallelisation by allowing developers to focus on specific areas of improvement without
+cross-component interference. For example, the simulation component can be optimized to
+run faster and more efficiently through advanced numerical methods and parallel 
+computing techniques. This is particularly beneficial for handling large datasets or complex simulations that demand significant 
+computational resources. By isolating the simulation component, developers can experiment with and implement various optimization strategies, 
+ensuring that the component runs as efficiently as possible.
 
 \medskip
 
@@ -408,23 +408,23 @@ a solid foundation for future improvements and extensions. The versatility and p
 it a valuable tool in the continuous effort to refine our simulations and better understand the underlying physical structures.
 
 
-\subsection{Parallelization and GPU Acceleration}
+\subsection{Parallelisation and GPU Acceleration}
 
 The simulation of diffraction patterns can be computationally intensive, especially when dealing with large datasets or complex models. 
 Given that the code is written in Python, which is inherently slower than compiled languages like C++, optimizing for performance is crucial. 
-One effective strategy for improving performance is parallelization. By distributing the computational workload across multiple cores or processors, 
-we can significantly reduce simulation time. In this section, we will briefly discuss parallelization and overview the strategies for parallelization 
+One effective strategy for improving performance is parallelisation. By distributing the computational workload across multiple cores or processors, 
+we can significantly reduce simulation time. In this section, we will briefly discuss parallelisation and overview the strategies for parallelisation 
 on both GPU and CPU.
 
 \medskip
 
-\subsubsection{Overview of Parallelization}
+\subsubsection{Overview of Parallelisation}
 
-Parallelization involves breaking down tasks into independent units. Instead of performing a complex calculation in one go, the task is 
+Parallelisation involves breaking down tasks into independent units. Instead of performing a complex calculation in one go, the task is 
 distributed across multiple processors for simultaneous processing. This approach leverages the power of modern hardware, with multiple cores 
 on a single processor or distributed computing systems. The key is to achieve the right balance: tasks must be independent to avoid communication 
 overhead yet large enough for efficient processing. While challenges exist, such as managing communication and limited parallelizability for certain 
-problems, parallelization is a game-changer in fields like scientific computing, machine learning, and video processing.
+problems, parallelisation is a game-changer in fields like scientific computing, machine learning, and video processing.
 
 \medskip
 
@@ -441,7 +441,7 @@ the GPU, we need to structure our code in a way that aligns with the GPU's stren
     \caption{Comparison between GPU and CPU. The GPU has more cores but is less flexible than the CPU, making it suitable for simpler parallel tasks. \cite{gpu_vs_cpu}}
 \end{figure}
 
-\subsubsection{Parallelization Strategies}
+\subsubsection{Parallelisation Strategies}
 
 To parallelize the code, we need to identify the independent parts. In both the \textit{cmaes} and \textit{mcmc} algorithms, a population is generated 
 for each generation (or step), and each individual in the population is evaluated independently to calculate the goodness of fit. Since one generation 
@@ -450,7 +450,7 @@ in the population is possible.
 
 \medskip
 
-Initially, to avoid the complexity of GPU parallelization, we used the multiprocessing library in Python to parallelize the code. This library allows 
+Initially, to avoid the complexity of GPU parallelisation, we used the multiprocessing library in Python to parallelize the code. This library allows 
 us to run multiple processes in parallel, each on a different core. We used the \textit{Pool} class from the multiprocessing library to create a pool 
 of workers, each evaluating the goodness of fit. This approach reduced computation time significantly, as multiple individuals could be evaluated simultaneously.
 
@@ -505,10 +505,10 @@ in the project.
 
 \medskip
 
-In conclusion, parallelization and GPU acceleration have significantly enhanced the performance
+In conclusion, parallelisation and GPU acceleration have significantly enhanced the performance
  of our diffraction pattern simulation and fitting code. By leveraging the multiprocessing 
- library and NumPy optimizations, we achieved considerable speedups in CPU-based parallelization. 
- Transitioning to GPU parallelization using CuPy further improved execution times, although some
+ library and NumPy optimizations, we achieved considerable speedups in CPU-based parallelisation. 
+ Transitioning to GPU parallelisation using CuPy further improved execution times, although some
   operations still perform better in NumPy due to their non-parallelizable nature. Future work 
   will focus on identifying and optimizing these bottlenecks to fully harness the power of GPU 
   acceleration. The groundwork laid here provides a robust foundation for further improvements 
@@ -557,8 +557,7 @@ In conclusion, parallelization and GPU acceleration have significantly enhanced 
   \label{fig:uncertainity}
   \end{figure}
   
-  As seen in Figure \ref{fig
-  }, the uncertainty levels off after a certain number of angles, similar to the findings by Sunday et al.
+  As seen in Figure \ref{fig:uncertainity}, the uncertainty levels off after a certain number of angles, similar to the findings by Sunday et al.
    However, in our simulation, the angle at which uncertainty stabilizes is around 78 degrees, 
    compared to 30 degrees in their study. This discrepancy could be due to differences in the measured
 structures and other factors. Nevertheless, this simulation demonstrates the feasibility of real-time 
