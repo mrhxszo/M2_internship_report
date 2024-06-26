@@ -6,7 +6,7 @@ After outlining the context of the work-study program and describing the techniq
 on, it is finally time to discuss my contributions to the project. First, I will explore 
 the design I implemented and explain why this specific design was chosen. Next, we will 
 examine the simulation models I developed and their applications. Following this, I will 
-detail the optimization and parallelization of the code that was done to enhance its performance. 
+detail the optimization and parallelisation of the code that was done to enhance its performance. 
 Finally, we will discuss how this optimized code could be utilised to estimate uncertainty
 in real-time during synchrotron experiments.
 
@@ -111,7 +111,11 @@ The previous design adopted a monolithic approach, where the fitting and simulat
     \label{fig:monolithic_design}
 \end{figure}
 
-Furthermore, individual models within the system implemented their own fitting and simulation functionalities. This resulted in a significant amount of code duplication, leading to inconsistencies between models. Moreover, adding new models required rewriting these functionalities from scratch, hindering the system's scalability. This approach proved inefficient for managing a growing number of models. These two limitations combined made it challenging to optimize or parallelize the code effectively. Since the fitting and simulation components were intertwined, it was difficult to isolate and optimize individual sections for improved performance.
+Furthermore, individual models within the system implemented their own fitting and simulation functionalities. This resulted in a 
+significant amount of code duplication, leading to inconsistencies between models. Moreover, adding new models required rewriting 
+these functionalities from scratch, hindering the system's scalability. This approach proved inefficient for managing a growing number 
+of models. These two limitations combined made it challenging to optimize or parallelize the code effectively. Since the fitting and 
+simulation components were intertwined, it was difficult to isolate and optimize individual sections for improved performance.
 
 \medskip
 
@@ -137,10 +141,12 @@ This design choice significantly enhances the system's flexibility and scalabili
 \medskip
 
 The decoupling of components also facilitates optimization and 
-parallelization by allowing developers to focus on specific areas of improvement without
- cross-component interference. For example, the simulation component can be optimized to
-  run faster and more efficiently through advanced numerical methods and parallel 
-  computing techniques. This is particularly beneficial for handling large datasets or complex simulations that demand significant computational resources. By isolating the simulation component, developers can experiment with and implement various optimization strategies, ensuring that the component runs as efficiently as possible.
+parallelisation by allowing developers to focus on specific areas of improvement without
+cross-component interference. For example, the simulation component can be optimized to
+run faster and more efficiently through advanced numerical methods and parallel 
+computing techniques. This is particularly beneficial for handling large datasets or complex simulations that demand significant 
+computational resources. By isolating the simulation component, developers can experiment with and implement various optimization strategies, 
+ensuring that the component runs as efficiently as possible.
 
 \medskip
 
@@ -319,6 +325,241 @@ To add the overlay model to the code, we inherit from the \textit{StackedTrapezo
 The \textit{StackedTrapezoidGeometry} class will be modified to include the shift in the x direction for the second layer. This shift is entered by the
 user and is fitted later on.
 
-\subsection{Implementation of MCMC}
-\subsection{Optimisation and parrellelisation}
-\subsection{On the fly uncertainity estimation}
+\subsection{Implementation of MCMC to Measure Uncertainty}
+
+As discussed in Section \ref{sec:mcmc_cdsaxs}, after finding the best fit for a model using the \textit{cmaes} algorithm, it is crucial 
+to determine the uncertainty in the fitted parameters. This is where the \textit{mcmc} method of the \textit{Fitter} class becomes essential. 
+While we follow a similar approach to the algorithm described in Section \ref{sec:mcmc_cdsaxs}, there are key differences that will be discussed 
+in this section, along with the method's implementation and its outputs.
+
+\medskip
+
+We utilize the \textit{emcee} Python package \cite{emcee} to implement this method. This package is well-regarded for its ease 
+of use and effective implementation of the MCMC algorithm, having been referenced in several scientific papers \cite{emcee_refed}. 
+A significant advantage of \textit{emcee} is the flexibility it offers in choosing the type of moves for the MCMC algorithm. Unlike 
+the Metropolis-Hastings criterion used in Section \ref{sec:mcmc_cdsaxs}, \textit{emcee} employs the stretch move by default, which 
+has been shown to achieve faster convergence \cite{goodman2010_strech_move,emcee}. The stretch move uses the following formula to 
+determine whether to accept or reject a move:
+
+\begin{equation}
+    P_{i} = e^{Z^{1-N} (GF_{i} -GFB)}
+\end{equation}
+
+where \(P_{i}\) is the probability of accepting the move, \(N\) is the number of parameters, \(GF_{i}\) is the current goodness of fit, 
+and \(GFB\) is the goodness of fit of the initial fit. \(Z\) is drawn randomly from the distribution:
+
+\begin{equation}
+    Z \in g(z) \propto 
+    \begin{cases} 
+      \frac{1}{z} & \text{for } z \in \left[\frac{1}{a}, a\right] \\
+      0 & \text{otherwise}
+    \end{cases}
+\end{equation}
+
+\medskip
+
+In addition, \textit{emcee} includes a built-in function to calculate the autocorrelation time of the chain, which helps determine which part of the chain to use for statistical analysis. We implemented the \textit{mcmc} method using the default stretch move of \textit{emcee}, but also provided options to use other moves like Metropolis-Hastings and Gaussian moves.
+
+\medskip
+
+For the implementation, the user needs to provide the following inputs:
+\begin{itemize}
+    \item The number of parameters
+    \item $\sigma$, which is the standard deviation of the initial walker population
+    \item The number of steps to run the MCMC algorithm
+    \item The number of walkers
+    \item A directory to save the statistical analysis information(optional)
+\end{itemize}
+
+\medskip
+
+Unlike previous approaches \cite{sunday2016evaluation}, we do not vary the model parameters directly.
+ Instead, we use a normalized space where variations range between $-\sigma$ and $\sigma$. These 
+ normalized values are then rescaled to the actual parameter values using the following formula:
+
+\begin{equation}
+    \text{Rescaled Params} = \text{Normalized Params} \times \text{Allowed Range} + \text{Best Fit Cmaes}
+\end{equation}
+
+This approach provides better control over the parameter range, preventing unnecessary exploration of 
+regions far from the best fit. It also allows the best fit obtained from the CMAES algorithm to serve as the mean of the initial walker population.
+
+\medskip
+
+After extracting the chain from the MCMC algorithm, we perform a statistical analysis. This includes calculating 
+the mean, standard deviation, total number of individuals in the chain, minimum and maximum parameter values, lower
+ and upper confidence intervals as specified by the user, and the uncertainty in the parameters, defined as the difference between the upper and lower confidence intervals.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/mcmc_out.png}
+    \caption{Example of output statistics file of the MCMC algorithm. The model used was the stacked trapezoid model.}
+\end{figure}
+
+\FloatBarrier
+
+In conclusion, the implementation of the MCMC method using the \textit{emcee} package has proven to be an effective
+approach for quantifying the uncertainty in the parameters of our models. By leveraging the flexibility and advanced
+features of \textit{emcee}, such as the stretch move and autocorrelation time calculation, we have enhanced the robustness
+and efficiency of our statistical analysis. The normalization and rescaling strategy we employed allows for better
+control over the parameter space, ensuring a more focused exploration around the best fit obtained from the CMAES
+algorithm. This method not only provides detailed statistical insights into the model parameters but also sets 
+a solid foundation for future improvements and extensions. The versatility and precision of the MCMC method make 
+it a valuable tool in the continuous effort to refine our simulations and better understand the underlying physical structures.
+
+
+\subsection{Parallelisation and GPU Acceleration}
+
+The simulation of diffraction patterns can be computationally intensive, especially when dealing with large datasets or complex models. 
+Given that the code is written in Python, which is inherently slower than compiled languages like C++, optimizing for performance is crucial. 
+One effective strategy for improving performance is parallelisation. By distributing the computational workload across multiple cores or processors, 
+we can significantly reduce simulation time. In this section, we will briefly discuss parallelisation and overview the strategies for parallelisation 
+on both GPU and CPU.
+
+\medskip
+
+\subsubsection{Overview of Parallelisation}
+
+Parallelisation involves breaking down tasks into independent units. Instead of performing a complex calculation in one go, the task is 
+distributed across multiple processors for simultaneous processing. This approach leverages the power of modern hardware, with multiple cores 
+on a single processor or distributed computing systems. The key is to achieve the right balance: tasks must be independent to avoid communication 
+overhead yet large enough for efficient processing. While challenges exist, such as managing communication and limited parallelizability for certain 
+problems, parallelisation is a game-changer in fields like scientific computing, machine learning, and video processing.
+
+\medskip
+
+If we can use the GPU to perform calculations in parallel, we can achieve a significant speedup. However, there is a catch: the GPU is not as 
+flexible as the CPU. It is designed for parallel processing of large amounts of data, making it ideal for tasks like matrix multiplication. However, 
+the GPU is not well-suited for tasks that require branching or recursion, as these can slow down processing speed. Therefore, to take full advantage of 
+the GPU, we need to structure our code in a way that aligns with the GPU's strengths.
+
+\medskip
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/gpu_vs_cpu.png}
+    \caption{Comparison between GPU and CPU. The GPU has more cores but is less flexible than the CPU, making it suitable for simpler parallel tasks. \cite{gpu_vs_cpu}}
+\end{figure}
+
+\subsubsection{Parallelisation Strategies}
+
+To parallelize the code, we need to identify the independent parts. In both the \textit{cmaes} and \textit{mcmc} algorithms, a population is generated 
+for each generation (or step), and each individual in the population is evaluated independently to calculate the goodness of fit. Since one generation 
+depends on the best fit of the previous generation, parallelizing the generation is not possible. However, parallelizing the evaluation of individuals 
+in the population is possible.
+
+\medskip
+
+Initially, to avoid the complexity of GPU parallelisation, we used the multiprocessing library in Python to parallelize the code. This library allows 
+us to run multiple processes in parallel, each on a different core. We used the \textit{Pool} class from the multiprocessing library to create a pool 
+of workers, each evaluating the goodness of fit. This approach reduced computation time significantly, as multiple individuals could be evaluated simultaneously.
+
+\medskip
+
+However, the code still contained many for-loops that could be parallelized using NumPy operations. NumPy, being a highly optimized library for numerical 
+operations, was used to further optimize the code. Wherever for-loops could be replaced by NumPy operations, we did so, further reducing computation time. 
+The major challenge was that the quantities we wanted to perform operations on were not of the same shape, requiring the use of NumPy broadcasting to 
+perform the operations (see Figure \ref{fig:broadcasting} for an example).
+
+\medskip
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.7\textwidth]{images/multiprocessing.png}
+    \caption{Multiprocessing used to improve the execution time of the code for the \textit{cmaes} algorithm. The generation was fixed to 20.}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.7\textwidth]{images/broadcasting.png}
+    \caption{NumPy broadcasting used to perform operations on arrays of different shapes (image taken from NumPy documentation).}
+    \label{fig:broadcasting}
+\end{figure}
+
+\FloatBarrier
+
+After this step, it was easier to parallelize the code for GPU. As the code was already vectorized, we used the CuPy library, a GPU-accelerated 
+version of NumPy. CuPy is built on top of CUDA, a parallel computing platform and application programming interface created by Nvidia. CuPy uses 
+CUDA libraries like cuBLAS, cuDNN, cuFFT, cuSPARSE, etc., which are highly optimized for parallel computing (more information can be found in its 
+documentation page \cite{cupy}).
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/gpu.png}
+    \caption{CuPy used to parallelize the code. The number of iterations per second in the parallel version is much higher. (This test was performed 
+    on CEA aar164 server Intel(R) Xeon(R) Platinum 8362 CPU @ 2.80GHz, 128 cores, and NVIDIA A100 80GB GPU)}
+    \label{fig:cupy}
+\end{figure}
+
+\FloatBarrier
+
+However, we are essentially replacing NumPy operations with CuPy operations, some operations 
+are more efficient in NumPy than in CuPy. For example, cumulative sum in CuPy is slower than in 
+NumPy because the nature of the operation is not parallelizable. However, the calculation of the 
+analytical Fourier transform and the calculation of log error are much faster in CuPy than in 
+NumPy. Thus, we still need to identify the parts of the code that are slowing down the execution 
+time due to communication overhead and replace them with NumPy operations. This is perhaps why 
+we don't see a significant speedup in the execution time in Figure \ref{fig:cupy}. However, the 
+code is now ready to be used on a GPU and can be further optimized. This will be the next step 
+in the project.
+
+\medskip
+
+In conclusion, parallelisation and GPU acceleration have significantly enhanced the performance
+ of our diffraction pattern simulation and fitting code. By leveraging the multiprocessing 
+ library and NumPy optimizations, we achieved considerable speedups in CPU-based parallelisation. 
+ Transitioning to GPU parallelisation using CuPy further improved execution times, although some
+  operations still perform better in NumPy due to their non-parallelizable nature. Future work 
+  will focus on identifying and optimizing these bottlenecks to fully harness the power of GPU 
+  acceleration. The groundwork laid here provides a robust foundation for further improvements 
+  and scalability in our computational simulations.
+
+
+  \subsection{On-the-Fly Uncertainty Estimation}
+
+  Another objective identified in our research was to utilize the code to estimate 
+  uncertainty in real-time during synchrotron experiments. The uncertainty in CD-SAXS experiments 
+  depends on various factors such as exposure time, sample thickness, detector distance, etc. Among 
+  these, exposure time plays a crucial role in determining uncertainty. The study by Sunday et al. \cite{sunday2016evaluation} 
+  provides an excellent example of this relationship (see Figure \ref{fig:exposure}).
+  
+  \begin{figure}[h]
+  \centering
+  \includegraphics[width=0.4\textwidth]{images/exposure.png}
+  \caption{Uncertainty in fit parameters as a function of exposure time. The uncertainty decreases with increasing exposure time. (Sunday et al. \cite{sunday2016evaluation})}
+  \label{fig:exposure}
+  \end{figure}
+  
+  Sunday et al. conducted measurements over a range of angles with specified step sizes for different 
+  acquisition times. Their results, shown in the figure, present representative data cuts for various 
+  order peaks, illustrating the impact of exposure time on data quality. The first-order peak, which 
+  exhibits the most intense scattering, remains well-defined even at shorter acquisition times. However, 
+  as the measurement time decreases, the lower intensity features of the higher-order peaks become 
+  progressively obscured due to the decreasing signal-to-noise ratio.
+  
+  If we could estimate uncertainty in real-time during the experiment, it would enable us to adjust 
+  various parameters including exposure time affecting uncertainty on the fly. Additionally, we could stop the experiment 
+  after measuring a sufficient number of angles. The same paper by Sunday et al. demonstrates that 
+  beyond a certain number of angles, the uncertainty does not change significantly. This approach 
+  could facilitate performing CD-SAXS experiments in laboratory settings with equipment less powerful 
+  than synchrotrons.
+  
+  To investigate this, a simulation was conducted using the stacked trapezoid model. A two-stack 
+  trapezoid was considered with the following parameters: \( h_{1} = h_{2} = 21.5 \) nm, bottom CD = 24 nm, 
+  first sidewall angle = 85°, and second sidewall angle = 90°. The simulation aimed to mimic 
+  data acquisition at different angles with a measurement time of 2 seconds per angle. The uncertainty 
+  was calculated after every 15 angles measured. The results are shown in Figure \ref{fig:uncertainity}.
+
+  \begin{figure}[h]
+  \centering
+  \includegraphics[width=0.8\textwidth]{images/uncertainity.png}
+  \caption{Uncertainty in the fit parameters as a function of the number of angles measured.}
+  \label{fig:uncertainity}
+  \end{figure}
+  
+  As seen in Figure \ref{fig:uncertainity}, the uncertainty levels off after a certain number of angles, similar to the findings by Sunday et al.
+   However, in our simulation, the angle at which uncertainty stabilizes is around 78 degrees, 
+   compared to 30 degrees in their study. This discrepancy could be due to differences in the measured
+structures and other factors. Nevertheless, this simulation demonstrates the feasibility of real-time 
+uncertainty estimation during experiments, allowing for parameter adjustments as needed. Further 
+testing with extensive real data is necessary to validate this approach, which is an ongoing effort.

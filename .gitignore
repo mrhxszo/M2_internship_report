@@ -6,3 +6,6 @@
 *.aux
 *.bcf
 *.blg
+*.fls
+*.fdb_latexmk
+*.out
