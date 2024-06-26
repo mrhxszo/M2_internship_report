@@ -3,13 +3,13 @@
 \BOOKMARK [2][-]{subsection.2.1}{Host organisation}{section.2}% 3
 \BOOKMARK [3][-]{subsubsection.2.1.1}{History}{subsection.2.1}% 4
 \BOOKMARK [3][-]{subsubsection.2.1.2}{Sectors of activity}{subsection.2.1}% 5
-\BOOKMARK [3][-]{subsubsection.2.1.3}{Future and oreintation strategy}{subsection.2.1}% 6
+\BOOKMARK [3][-]{subsubsection.2.1.3}{Future and orientation strategy}{subsection.2.1}% 6
 \BOOKMARK [2][-]{subsection.2.2}{Project description}{section.2}% 7
 \BOOKMARK [2][-]{subsection.2.3}{Objectives}{section.2}% 8
 \BOOKMARK [1][-]{section.3}{CD-SAXS}{}% 9
 \BOOKMARK [2][-]{subsection.3.1}{Introduction}{section.3}% 10
-\BOOKMARK [2][-]{subsection.3.2}{Scattering Model}{section.3}% 11
-\BOOKMARK [2][-]{subsection.3.3}{Experimental setup}{section.3}% 12
+\BOOKMARK [2][-]{subsection.3.2}{Experimental Setup}{section.3}% 11
+\BOOKMARK [2][-]{subsection.3.3}{Scattering Model}{section.3}% 12
 \BOOKMARK [2][-]{subsection.3.4}{Fitting Algorithm}{section.3}% 13
 \BOOKMARK [3][-]{subsubsection.3.4.1}{Covariance Matrix Adaptation Evolution Strategy \(CMAES\)}{subsection.3.4}% 14
 \BOOKMARK [3][-]{subsubsection.3.4.2}{Uncertainity estimation by Monte Carlo Markov Chain\(MCMC\) method}{subsection.3.4}% 15
@@ -21,13 +21,13 @@
 \BOOKMARK [3][-]{subsubsection.4.2.2}{Relationships between components}{subsection.4.2}% 21
 \BOOKMARK [3][-]{subsubsection.4.2.3}{Why this design?}{subsection.4.2}% 22
 \BOOKMARK [2][-]{subsection.4.3}{Simulation Models}{section.4}% 23
-\BOOKMARK [3][-]{subsubsection.4.3.1}{Breif overview of photoresist lithography}{subsection.4.3}% 24
+\BOOKMARK [3][-]{subsubsection.4.3.1}{Brief overview of photoresist lithography}{subsection.4.3}% 24
 \BOOKMARK [3][-]{subsubsection.4.3.2}{Stacked Trapezoid Model}{subsection.4.3}% 25
 \BOOKMARK [3][-]{subsubsection.4.3.3}{Rounded corners model}{subsection.4.3}% 26
 \BOOKMARK [3][-]{subsubsection.4.3.4}{Overlay model}{subsection.4.3}% 27
 \BOOKMARK [2][-]{subsection.4.4}{Implementation of MCMC to Measure Uncertainty}{section.4}% 28
-\BOOKMARK [2][-]{subsection.4.5}{Parallelization and GPU Acceleration}{section.4}% 29
-\BOOKMARK [3][-]{subsubsection.4.5.1}{Overview of Parallelization}{subsection.4.5}% 30
-\BOOKMARK [3][-]{subsubsection.4.5.2}{Parallelization Strategies}{subsection.4.5}% 31
-\BOOKMARK [2][-]{subsection.4.6}{On the fly uncertainity estimation}{section.4}% 32
+\BOOKMARK [2][-]{subsection.4.5}{Parallelisation and GPU Acceleration}{section.4}% 29
+\BOOKMARK [3][-]{subsubsection.4.5.1}{Overview of Parallelisation}{subsection.4.5}% 30
+\BOOKMARK [3][-]{subsubsection.4.5.2}{Parallelisation Strategies}{subsection.4.5}% 31
+\BOOKMARK [2][-]{subsection.4.6}{On-the-Fly Uncertainty Estimation}{section.4}% 32
 \BOOKMARK [1][-]{section.5}{Future Prospects}{}% 33
