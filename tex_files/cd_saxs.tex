@@ -3,7 +3,7 @@
 
 \medskip
 
-Miniaturizing transistors \color{red} I suggest you add a figure with a microscope image of a transistor and a microscope image of a typical sample we measure with SAXS, an array of line \color{black}, the building blocks of integrated circuits, is getting
+Miniaturizing transistors, the building blocks of integrated circuits, is getting
 tougher for the semiconductor industry. Shrinking their size and spacing (pitch)
 brings not only manufacturing hurdles but also a metrology problem. Precisely
 measuring these features during production is crucial for high-quality chips.
@@ -16,8 +16,50 @@ X-rays have much shorter wavelengths than the features being measured, allowing
 for more precise analysis. Additionally, they are sensitive to variations in
 composition, providing a richer data set.
 
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.6\textwidth]{images/transistor.png}
+    \caption{A classic transistor with three terminals. (On the right, an electron microscope image of a single transistor on a microchip.)\cite{transistor}}
+    \label{fig:transistor}
+\end{figure}
+
 \medskip
 
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.6\textwidth]{images/example_structures.png}
+    \caption{Examples of nanostructures that is typically being studied for characterisation. a is cross section of a line in b. \cite{rugosity}}
+    \label{fig:typical_analyse}
+\end{figure}
+
+\medskip
+
+CD-SAXS, a promising technique for nanostructure electronics, uses a transmission geometry, sending the beam through the sample and the 750 micrometer-thick silicon wafer. The x-ray spot size varying between 10-1000 $\mu$m, it enable the measurment of small patterned areas. 
+Studies have shown CD-SAXS's effectiveness in characterizing the shape and spacing of nanometer-sized patterns \cite{sunday_2015}.
+
+\medskip
+CD-SAXS  utilises variable-angle transmission scattering. By rotating the sample, it can probe the vertical profile of the nanostructures. This allows 
+for reconstructing their shape and composition in two or even three dimensions.
+We can think of it as a diffraction experiment for single crystals, but instead of a crystal, the 
+periodic array of nanostructures acts like one. This technique excels at reconstructing 
+intricate shapes smaller than 15 nm and with spacings around 30 nm, dimensions crucial for 
+the semiconductor industry. \cite{first_cdsaxs_article}
+
+\medskip
+While CD-SAXS was demonstrated very useful, the main limitation is inherent to its geometry. The beam needs to go thourgh the 750 micrometer-thick silicon wafer.
+This is critical for x-ray energy below 17 keV because a major part of the beam is absorbed. The first CD-SAXS studies were conducted in synchrotron where the energy
+of the x-rays can be tuned and where the brillance is the highest. For laboratory sources, it is currently still an issue since there is no source with enough photons to enable
+efficient laboratory measurments. This is a major constrain for the spread of CD-SAXS where a tool in the factory is required to have a direct control during the production. 
+
+\medskip
+A possibility to go around the absorption limitation is to perform grazing-incidence experiment where the beam is now reflected at the surface of the sample. This technique, 
+called GISAXS become more relevant. It uses X-rays near the critical angle of the probed film resulting in a large sampling area and statistically significant data. This large area allows for faster measurements, enabling in situ kinetic studies.
+It has the same resolution of CD-SAXS but enable to examine nanostructures across large areas, i.e. the beam footprint on the sample surface 
+being the beam size divided by the sinus of the incident angle of the beam on the sample. For GISAXS, the incident angle is usually around 0.3 deg, making a 10 $\mu$m beam footprint equal to 2 mm   
+for semiconductors. 
+
+\medskip
 Early research on X-ray characterization of patterned nanostructures used reflection
 methods like X-ray diffraction (XRD) and grazing-incidence small-angle X-ray scattering (GISAXS). 
 These techniques demonstrated X-ray's sensitivity to features shape and spacing.
@@ -26,36 +68,10 @@ the sensitivity to both the grating and strain between layers \cite{Baumbach_Lü
 
 \medskip
 
-\color{red} I would reverse how you introduce SAXS and GISAXS. SAXS was done first. People started with SAXS and it works well except that the beam needs to go through the Si wafer that is not easy (most of the x-rays are absorbed) and that is why you need to go to synchrotron \color{black}
-
-CDSAXS uses a transmission geometry, sending the beam through the sample and the 750 micrometer-thick silicon wafer. The x-ray spot size varying between 10-1000 $\mu$m, it enable the measurment of small patterned areas. 
-Studies have shown CDSAXS's effectiveness in characterizing the shape and spacing of nanometer-sized patterns \cite{sunday_2015}.
-
-\medskip
-CDSAXS  utilises variable-angle transmission scattering. By rotating the sample, it can probe the vertical profile of the nanostructures. This allows 
-for reconstructing their shape and composition in two or even three dimensions.
-We can think of it as a diffraction experiment for single crystals, but instead of a crystal, the 
-periodic array of nanostructures acts like one. This technique excels at reconstructing 
-intricate shapes smaller than 15 nm and with spacings around 30 nm, dimensions crucial for 
-the semiconductor industry. \cite{first_cdsaxs_article}
-
-\medskip
-While CDSAXS was demonstrated very useful, the main limitation is inherent to its geometry. The beam needs to go thourgh the 750 micrometer-thick silicon wafer.
-This is critical for x-ray energy below 17 keV because a major part of the beam is absorbed. The first CDSAXS studies were conducted in synchrotron where the energy
-of the x-rays can be tuned and where the brillance is the highest. For laboratory sources, it is currently still an issue since there is no source with enough photons to enable
-efficient laboratory measurments. This is a major constrain for the spread of CD-SAXS where a tool in the factory is required to have a direct control during the production. 
-
-\medskip
-A possibility to go around the absorption limitation is to perform grazing-incidence experiment where the beam is now reflected at the surface of the sample. This technique, 
-called GISAXS become more relevant. It uses X-rays near the critical angle of the probed film resulting in a large sampling area and statistically significant data. This large area allows for faster measurements, enabling in situ kinetic studies.
-It has the same resolution of CDSAXS but enable to examine nanostructures across large areas, i.e. the beam footprint on the sample surface 
-being the beam size divided by the sinus of the incident angle of the beam on the sample. For GISAXS, the incident angle is usually around 0.3 deg, making a 10 $\mu$m beam footprint equal to 2 mm   
-for semiconductors. 
-
 While probing large areas is interesting for some application such as the study of polymer for example, it is a limit for 
 the semiconductor metrology. Indeed, the patterned areas are only few micrometers wide except for some specific applications like memory arrays (Hofmann et al.,
 2009; Scholze et al., 2011). Logic devices require smaller probing areas due to test structure 
-size and the complexity of the multicomponent, 3D nanostructures. \cite{phd_freychet}
+size and the complexity of the multicomponent, 3D nanostructures. But CD-SAXS has no such limitation thus it has remerged as a technique that still needs to be developed but is a promising one.\cite{phd_freychet}
 
 \medskip
 
@@ -64,7 +80,7 @@ size and the complexity of the multicomponent, 3D nanostructures. \cite{phd_frey
 
 \subsection{Experimental Setup}
 
-During this project, I had the opportunity to work and observe how CDSAXS 
+During this project, I had the opportunity to work and observe how CD-SAXS 
 measurements are performed at the European Synchrotron Radiation Facility (ESRF)
 in Grenoble, France. The ESRF is a world-renowned research facility that provides
 intense X-ray beams for a wide range of scientific experiments. Specifically,
@@ -131,34 +147,36 @@ In the profile I vs q => put I and qz on the axis and not below the picture. The
 \subsection{Scattering Model} \label{sec:scattering_model}
 
 \medskip
-We can represent the diffraction of a collimated X-ray beam by:
-
+We will not delve into the complete theory of SAXS here, as it exceeds the scope of this document. 
+However, Chapters 1 and 2 of this book \cite{bookSaxs} offer excellent detailed insights into the underlying 
+theory. Building upon this, we will now describe the diffraction of a collimated X-ray beam as follows:
 \begin{equation}
-    I(\mathbf{Q}) = \varOmega | F(\mathbf{Q}) |^2,
+    I(\mathbf{Q}) = \varOmega | \mathcal{F}(\mathbf{Q}) |^2,
 \end{equation}
     
 where $I(\mathbf{Q})$ represents the scattered intensity as a function of the scattering
-vector $\mathbf{Q}$, $\mathcal{F}$ is a constant independent of $\mathbf{Q}$,
-and $F(\mathbf{Q})$ is the Fourier transform of a function describing the mass
+vector $\mathbf{Q}$, $\Omega$ is a variable independent of $\mathbf{Q}$,
+and $\mathcal{F}(\mathbf{Q})$ is the Fourier transform of a function describing the mass
 distribution within the nanoimprinted pattern. 
     
-This relationship is considered valid within the limitations of the CDSAXS geometry,
+This relationship is considered valid within the limitations of the CD-SAXS geometry,
 which includes a transmission geometry and a low probability of multiple scattering.    
 Unfortunately, the conjugate product in the equation leads to a loss of phase
 information, making it impossible to analytically extract $F(\mathbf{Q})$ from $I(\mathbf{Q})$.
 Therefore, the primary method for determining feature dimensions involves constructing
 a real-space model of the pattern's cross-section. The Fourier transform of this 
-model is then fitted to the experimental CDSAXS data.
+model is then fitted to the experimental CD-SAXS data.
 
 \medskip
 
 During my work-study program, we were mainly concerned with lines of nanostructures (see figure \ref{fig:isolated_line}). The cross-section of
-these can be represented as a stack of trapezoids.
+these can be represented as a stack of trapezoids (see figure \ref{fig:trapezoid_model}).
+
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.2\textwidth]{images/trapezoid.png}
-    \label{fig:trapezoid_model}
+    \includegraphics[width=0.3\textwidth]{images/trapezoid.png}
     \caption{Cross-section of a nanostructure line represented as a stack of trapezoids.}
+    \label{fig:trapezoid_model}
     
 \end{figure}
 We can calculate the analytical fourier transform of a trapezoidal shape to use for fitting
@@ -203,44 +221,68 @@ where $DW$ is the Debye-Waller factor.
 
 \subsection{Fitting Algorithm}
 
-While CDSAXS excels at detecting deviations from a perfect grating pattern in buried structures, it requires additional processing to convert the raw data into a meaningful real-world structure. This process involves using an inverse algorithm, which essentially translates the scattered intensity information back into the original structure's characteristics.
+While CD-SAXS excels at detecting deviations from a perfect grating pattern in buried structures, it requires 
+additional processing to convert the raw data into a meaningful real-world structure. This process involves using 
+an inverse algorithm, which essentially translates the scattered intensity information back into the original structure's 
+characteristics.
 
 \medskip
 
-However, there's a catch. Traditional optimization methods used for refinement often fall short when dealing with complex internal structures with numerous parameters. These methods rely on iteratively simulating scattering data and comparing it to the measured data. Unfortunately, this approach can be very time-consuming, especially for intricate structures.
+However, there's a catch. Traditional optimization methods used for refinement often fall short when dealing with 
+complex internal structures with numerous parameters. These methods rely on iteratively simulating scattering data 
+and comparing it to the measured data. Unfortunately, this approach can be very time-consuming, especially for intricate structures.
 
 \medskip
 
-Another challenge arises from the possibility of "degenerate" solutions. These occur when multiple structural models can produce the same scattering data, making it difficult to pinpoint the true structure. This is a common issue in scattering analysis.
+Another challenge arises from the possibility of "degenerate" solutions. These occur when multiple structural 
+models can produce the same scattering data, making it difficult to pinpoint the true structure. This is a common 
+issue in scattering analysis.
 
 \medskip
 
-Therefore, the ideal scenario for CDSAXS analysis involves an optimization algorithm that can consistently and rapidly converge on the best possible fit for the data. While some prior knowledge about the underlying structure can accelerate the process, such information isn't always readily available. This highlights the need for more efficient algorithms that can handle complex structures even with limited prior knowledge.
+Therefore, the ideal scenario for CD-SAXS analysis involves an optimization algorithm that can consistently and 
+rapidly converge on the best possible fit for the data. While some prior knowledge about the underlying structure 
+can accelerate the process, such information isn't always readily available. This highlights the need for more 
+efficient algorithms that can handle complex structures even with limited prior knowledge.
 
 \medskip
 
-Previous research has explored various algorithms to determine the optimal set of parameters for a model that best fits the measured CDSAXS data. These parameters essentially describe the actual structure of the nanostructure being analyzed.
+Previous research has explored various algorithms to determine the optimal set of parameters for a model that 
+best fits the measured CD-SAXS data. These parameters essentially describe the actual structure of the nanostructure 
+being analyzed.
 
 \medskip
 
-One approach utilizes a Markov chain Monte Carlo (MCMC) algorithm. However, this method requires a good initial guess for the structure's parameters and limitations on their search range. Additionally, it necessitates multiple independent runs to ensure the algorithm converges on the correct solution. While this approach can be effective, the need for tight parameter bounds might overlook potential fabrication errors in the sample.
+One approach utilizes a Markov chain Monte Carlo (MCMC) algorithm. However, this method requires a good initial 
+guess for the structure's parameters and limitations on their search range. Additionally, it necessitates multiple 
+independent runs to ensure the algorithm converges on the correct solution. While this approach can be effective, 
+the need for tight parameter bounds might overlook potential fabrication errors in the sample.
 
 \medskip
 
-Another strategy involves massive computing resources with parallelization and highly refined grid-based models. This method, known as reverse MCMC, offers greater accuracy but is limited by the availability of such computational power.
+Another strategy involves massive computing resources with parallelization and highly refined grid-based models. 
+This method, known as reverse MCMC, offers greater accuracy but is limited by the availability of such computational power.
 
 \medskip
 
-Genetic and evolutionary algorithms have emerged as promising alternatives. These methods mimic biological evolution, with the model parameters acting as the "genetic code." Starting with randomly generated parameters, these algorithms iteratively refine them through a "mixing strategy" over multiple generations until the optimal set is found. This approach excels at searching large parameter spaces with wide bounds, making it suitable for complex structures.
+Genetic and evolutionary algorithms have emerged as promising alternatives. These methods mimic biological evolution, 
+with the model parameters acting as the "genetic code." Starting with randomly generated parameters, these algorithms 
+iteratively refine them through a "mixing strategy" over multiple generations until the optimal set is found. This 
+approach excels at searching large parameter spaces with wide bounds, making it suitable for complex structures.
 \cite{hannon2016advancing}
 \subsubsection{Covariance Matrix Adaptation Evolution Strategy (CMAES)}
 
-One such algorithm is the Covariance Matrix Adaptation Evolution Strategy (CMAES). This method is particularly well-suited for high-dimensional optimization problems, making it ideal for complex nanostructure analysis. CMAES operates by maintaining a population of candidate solutions, with each iteration generating new candidates based on the previous generation's performance. By adapting the covariance matrix of the candidate solutions, CMAES can efficiently explore the parameter space and converge on the optimal solution.
+One such algorithm is the Covariance Matrix Adaptation Evolution Strategy (CMAES). This method is particularly 
+well-suited for high-dimensional optimization problems, making it ideal for complex nanostructure analysis. CMAES 
+operates by maintaining a population of candidate solutions, with each iteration generating new candidates based on 
+the previous generation's performance. By adapting the covariance matrix of the candidate solutions, CMAES can efficiently 
+explore the parameter space and converge on the optimal solution.
 
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.8\textwidth]{images/CMAES.png}
-    \caption{Illustraion of CMAES algorithm. The algorithm maintains a population of candidate solutions, with each iteration generating new candidates based on the previous generation's performance.(image taken from wikipedia CMAES page) }
+    \caption{Illustraion of CMAES algorithm. The algorithm maintains a population of candidate solutions, with each 
+    iteration generating new candidates based on the previous generation's performance.(image taken from wikipedia CMAES page) }
     \label{fig:cmaes}
 \end{figure}
 
@@ -283,7 +325,7 @@ complex nanostructures with X-ray scattering data, particularly when
 dealing with limited computational resources or tight time constraints.
 
 \subsubsection{Uncertainity estimation by Monte Carlo Markov Chain(MCMC) method}
-\label{sec:mcmc_cdsaxs}
+\label{sec:mcmc_cd-saxs}
 
 The CMAES algorithm provides a single best-fit solution for the nanostructure parameters. However, it's essential to understand the uncertainty associated with these parameters.
 This uncertainity relates to the different possible combinations of parameters that could result in a similar goodness of fit. 
