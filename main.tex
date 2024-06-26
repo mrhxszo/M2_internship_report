@@ -1,18 +1,33 @@
-\documentclass{article}
+\documentclass[12pt]{article}
 
 \usepackage{amsmath}
-
+\usepackage{xcolor}
 \usepackage{graphicx}
 \usepackage{subcaption}
 
-\usepackage{float}
+\usepackage{placeins}
 
-\usepackage[margin=2.54cm]{geometry}
+\usepackage[margin=2.5cm]{geometry}
+
+\usepackage{setspace}
+\onehalfspacing
+
+\usepackage{xcolor}
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks = false,
+    linkbordercolor = {white},
+    hidelinks = true,
+}
+
+\usepackage{titlesec}
+\titlespacing*{\section}{0pt}{\baselineskip}{\baselineskip}
+\titlespacing*{\subsection}{0pt}{\baselineskip}{\baselineskip}
 
 
-
-% \usepackage[style=numeric, heading=none, sorting=none]{biblatex}
-% \addbibresource{bib_files/Biblio.bib}
+\usepackage[style=numeric, sorting=none]{biblatex}
+\addbibresource{bib_files/Biblio.bib}
 
 %-------------------------- début du document ---------------------------%
 
@@ -25,11 +40,44 @@
 \newpage
 \section*{Acknowledgements}
 
+I would like to express my sincere gratitude to Dr. Guillaume Freychet, who has been an invaluable mentor and guide throughout this past year. His patience, availability, and unwavering support have been instrumental in my professional development.
+
+I would also like to extend my thanks to the entire team at LPMS for creating such an excellent working environment. Their camaraderie and support made this a truly enriching experience.
+
+Finally, a special thanks to Prof. Brahim Guizal, Director of my Master's program. His guidance won't go unappreciated.
+
 \medskip
 
 
 %------------------------------ table des matières ----------------------%
 \newpage
+
 \tableofcontents
+
+
+%----------------------------- outline -----------------------------%
+
+\include{tex_files/introduction}
+
+\newpage
+
+\include{tex_files/Context}
+
+\newpage
+
+\include{tex_files/cd_saxs}
+
+\newpage
+
+\include{tex_files/contribution}
+
+\newpage
+
+\include{tex_files/future_et_conclusions}
+
+\newpage
+
+%generate the bibliography
+\printbibliography
 
 \end{document}
