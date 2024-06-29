@@ -12,9 +12,12 @@ in real-time during synchrotron experiments.
 
 \subsection{Design}
 
-To gain a clear understanding of how this system works, let's visualize the design with the help of a 
-UML diagram (see Figure \ref{fig:UML}). This diagram offers a roadmap, highlighting the various components and their interactions.
- We'll then delve deeper to explore each component's role in the system.
+\color{red} I try to re-word here. I found that you are using to general world, like system, ...
+I would recommend to use words with a clearer meaning so we know exactly what you are talking about \color{black}
+
+To gain a clear understanding of how the developped algorithm work, the design of the algorithm is illustrated with the help of an 
+UML diagram in figure \ref{fig:UML}. This diagram offers a roadmap, highlighting the various components and their interactions.
+We will then delve deeper to explore each component role in the algorithm, as explained in the previous section.
 \subsubsection{Components}
 
 \subsubsection*{\textbf{Fitter:}}
@@ -28,7 +31,7 @@ fit, including the uncertainties in the parameters.
 This class calculates the residuals between the experimental data and the model.
 Currently, we use the log-likelihood as the residual function, but it can be easily extended
 to other residual functions. The \textit{Fitter} class calls this class and provides the relevant model.
-The \textit{Residual} class then uses the model's \textit{simulate\_diffraction} function to calculate
+The \textit{Residual} class then uses the model \textit{simulate\_diffraction} function to calculate
 the model diffraction pattern and compare it with the experimental data.
 
 \medskip
@@ -41,6 +44,12 @@ the model diffraction pattern and compare it with the experimental data.
 \end{figure}
 
 \FloatBarrier
+
+\color{red}Simulation interface and Geometry interface have their name 'inversed' on the UML. Chose which one you want to use and unify: simulation interface or interface simulation.
+I found the explanation of Simulation and Geometry interface really not clear.
+Mention what is their role, being the interface first
+And then mention that they build to simplify future model building (not having afterward to have function geometry dependant)
+\color{black}
 
 \subsubsection*{\textbf{Simulation interface:}}
 
@@ -64,7 +73,7 @@ In this UML diagram (Figure \ref{fig:UML}), we present the implementation of the
  \medskip
 
 These classes work together to simulate the physics and generate data that can be compared with experimental
-results. Throughout the project, additional models are being developed and they will be discussed later. The stacked 
+results. Throughout the project, additional models are being developed and will be discussed later. The stacked 
 trapezoid model serves as a prototype, illustrating how other models will be implemented. Each model will 
 adhere to the base interfaces \textit{Simulation} and \textit{Geometry}.
 
@@ -72,7 +81,7 @@ adhere to the base interfaces \textit{Simulation} and \textit{Geometry}.
 
 \medskip
 
-This system is designed to simulate and analyze diffraction patterns using
+This system \color{red}System again. It is really the right word?? \color{black} is designed to simulate and analyze diffraction patterns using
  a modular approach. At its core, the system comprises several key components:
   the \textit{Fitter}, \textit{Residual}, and interfaces for \textit{Simulation}
    and \textit{Geometry}, along with specific model implementations like the
@@ -80,9 +89,9 @@ This system is designed to simulate and analyze diffraction patterns using
 the fitting process by using the \textit{cmaes} function to estimate the best-fit parameters and
  the \textit{mcmc} function to assess the uncertainty in the fit. It takes in a model and
   experimental data, utilising the \textit{Residual} class to compute the difference between
-   the experimental data and the model's simulated data. The \textit{Residual} class leverages
-    the model's \textit{simulate\_diffraction} function to generate the diffraction pattern,
-     which it then compares with the experimental data.
+   the experimental data and the model simulated data. The \textit{Residual} class leverages
+    the model \textit{simulate\_diffraction} function to generate the diffraction pattern,
+     which it then compared with the experimental data.
 
 \medskip
 
@@ -95,7 +104,7 @@ The usefulness and implications of this design choice will be discussed shortly.
 
 
 \subsubsection{Why this design?}
-Let's first discuss the shortcomings of the previous design before explaining why the current design was chosen.
+We will first discuss the shortcomings of the previous design before explaining why the current design was chosen.
 
 \subsubsection*{Previous design:}
 
@@ -113,13 +122,13 @@ The previous design adopted a monolithic approach, where the fitting and simulat
 
 Furthermore, individual models within the system implemented their own fitting and simulation functionalities. This resulted in a 
 significant amount of code duplication, leading to inconsistencies between models. Moreover, adding new models required rewriting 
-these functionalities from scratch, hindering the system's scalability. This approach proved inefficient for managing a growing number 
+these functionalities from scratch, hindering the system scalability. This approach proved inefficient for managing a growing number 
 of models. These two limitations combined made it challenging to optimize or parallelize the code effectively. Since the fitting and 
-simulation components were intertwined, it was difficult to isolate and optimize individual sections for improved performance.
+simulation components were intertwined, it was difficult to isolate and optimize individual sections.
 
 \medskip
 
-Similarly the codes for the different models each implemented their own fitting and simulation
+Similarly the codes for the different models had their own fitting and simulation
 components, leading to code duplication and inconsistencies across models. This design was not
 scalable, as adding new models required rewriting the fitting and simulation components for each
 model.
@@ -135,14 +144,13 @@ simulation components, resulting in a modular structure. The \textit{Simulation}
 
 Also, by enabling simulation models to be developed independently of the fitting component, 
 new models can be introduced without modifying the existing codebase. Developers can 
-focus on developing new models without concerning themselves with the fitting process. 
-This design choice significantly enhances the system's flexibility and scalability.
+focus on developing new models without being concerned by the fitting process. 
+This design choice significantly enhances the system flexibility and scalability.
 
 \medskip
 
-The decoupling of components also facilitates optimization and 
-parallelisation by allowing developers to focus on specific areas of improvement without
-cross-component interference. For example, the simulation component can be optimized to
+Decoupling the components also facilitates the optimization and parallelisation. Indeed one can now focus on specific areas of improvement without
+considering cross-component interference. For example, the simulation component can be optimized to
 run faster and more efficiently through advanced numerical methods and parallel 
 computing techniques. This is particularly beneficial for handling large datasets or complex simulations that demand significant 
 computational resources. By isolating the simulation component, developers can experiment with and implement various optimization strategies, 
@@ -150,9 +158,13 @@ ensuring that the component runs as efficiently as possible.
 
 \medskip
 
+\color{red}I propose that you start before teh simulation model with the paragraph Brief overview of photoresist lithography.
+That enable to introduce the model. \color{black}
+
+
 \subsection{Simulation Models}
 
-In the realm of nano scale fabrication, techniques like photoresist lithography stands out as a pivotal technique. To model the structures 
+In the realm of nanoscale fabrication, techniques like photoresist lithography stands out as a pivotal technique. To model the structures 
 resulting from photoresist lithography, we can observe that many of these structures can be approximated by stacked trapezoids. 
 This simplification forms the foundation of our modeling approach. By considering the cross-sectional shapes of these lines, which 
 closely resemble trapezoids, we can create computational models that simulate the fabrication process and predict the resulting 
@@ -173,7 +185,8 @@ improve the fidelity of our models.
 
 \medskip
 
-Lastly, we introduce the overlay model, which simulates the alignment of different layers on a wafer.
+Lastly, we introduced the modeling of overlay phenomena, which consists of the misalignment of different layers on a wafer during 
+consecutive lithography stages.
 
 
 \subsubsection{Brief overview of photoresist lithography}
