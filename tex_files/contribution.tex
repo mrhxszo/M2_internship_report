@@ -343,7 +343,8 @@ specific amount, called the Top Critical Dimension (Top CD), in the x-direction.
 represents potential misalignment between layers.
 
 \medskip
-
+\color{red} No top CD is the linewidth of the top structure. 
+But the top set of trapezoids is shifted. That is the overlay\color{black}
 To calculate the coordinates of the second layer trapezoids, we can leverage the same method 
 used for the stacked trapezoid model. However, for the second layer, an additional x-axis shift 
 equal to the Top CD value is applied.
@@ -352,14 +353,14 @@ equal to the Top CD value is applied.
 
 To add the overlay model to the code, we inherit from the \textit{StackedTrapezoidSimulation} and \textit{StackedTrapezoidGeometry} classes.
 The \textit{StackedTrapezoidGeometry} class will be modified to include the shift in the x direction for the second layer. This shift is entered by the
-user and is fitted later on.
+user and can be fitted later on.
 
 \subsection{Implementation of MCMC to Measure Uncertainty}
-
+\color{red} Does not know the ref mcmc cdsaxs \color{black}
 As discussed in Section \ref{sec:mcmc_cdsaxs}, after finding the best fit for a model using the \textit{cmaes} algorithm, it is crucial 
-to determine the uncertainty in the fitted parameters. This is where the \textit{mcmc} method of the \textit{Fitter} class becomes essential. 
+to determine the uncertainty for each parameters of the model. This is where the \textit{mcmc} method of the \textit{Fitter} class becomes essential. 
 While we follow a similar approach to the algorithm described in Section \ref{sec:mcmc_cdsaxs}, there are key differences that will be discussed 
-in this section, along with the method's implementation and its outputs.
+in this section, along with the method implementation and its outputs.
 
 \medskip
 
@@ -367,7 +368,7 @@ We utilize the \textit{emcee} Python package \cite{emcee} to implement this meth
 of use and effective implementation of the MCMC algorithm, having been referenced in several scientific papers \cite{emcee_refed}. 
 A significant advantage of \textit{emcee} is the flexibility it offers in choosing the type of moves for the MCMC algorithm. Unlike 
 the Metropolis-Hastings criterion used in Section \ref{sec:mcmc_cdsaxs}, \textit{emcee} employs the stretch move by default, which 
-has been shown to achieve faster convergence \cite{goodman2010_strech_move,emcee}. The stretch move uses the following formula to 
+has been shown to achieve faster convergence \cite{emcee, goodman2010_strech_move}. The stretch move uses the following formula to 
 determine whether to accept or reject a move:
 
 \begin{equation}
@@ -397,14 +398,14 @@ For the implementation, the user needs to provide the following inputs:
     \item $\sigma$, which is the standard deviation of the initial walker population
     \item The number of steps to run the MCMC algorithm
     \item The number of walkers
-    \item A directory to save the statistical analysis information(optional)
+    \item A directory to save the statistical analysis information (optional)
 \end{itemize}
 
 \medskip
 
 Unlike previous approaches \cite{sunday2016evaluation}, we do not vary the model parameters directly.
- Instead, we use a normalized space where variations range between $-\sigma$ and $\sigma$. These 
- normalized values are then rescaled to the actual parameter values using the following formula:
+Instead, we use a normalized space where variations range between $-\sigma$ and $\sigma$. These 
+normalized values are then rescaled to the actual parameter values using the following formula:
 
 \begin{equation}
     \text{Rescaled Params} = \text{Normalized Params} \times \text{Allowed Range} + \text{Best Fit Cmaes}
@@ -417,7 +418,7 @@ regions far from the best fit. It also allows the best fit obtained from the CMA
 
 After extracting the chain from the MCMC algorithm, we perform a statistical analysis. This includes calculating 
 the mean, standard deviation, total number of individuals in the chain, minimum and maximum parameter values, lower
- and upper confidence intervals as specified by the user, and the uncertainty in the parameters, defined as the difference between the upper and lower confidence intervals.
+and upper confidence intervals as specified by the user, and the uncertainty in the parameters, defined as the difference between the upper and lower confidence intervals.
 
 \begin{figure}[h]
     \centering
