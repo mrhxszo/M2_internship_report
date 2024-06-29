@@ -82,16 +82,16 @@ adhere to the base interfaces \textit{Simulation} and \textit{Geometry}.
 \medskip
 
 This system \color{red}System again. It is really the right word?? \color{black} is designed to simulate and analyze diffraction patterns using
- a modular approach. At its core, the system comprises several key components:
-  the \textit{Fitter}, \textit{Residual}, and interfaces for \textit{Simulation}
-   and \textit{Geometry}, along with specific model implementations like the
-   \textit{StackedTrapezoidSimulation}. The \textit{Fitter} class orchestrates
+a modular approach. At its core, the system comprises several key components:
+the \textit{Fitter}, \textit{Residual}, and interfaces for \textit{Simulation}
+and \textit{Geometry}, along with specific model implementations like the
+\textit{StackedTrapezoidSimulation}. The \textit{Fitter} class orchestrates
 the fitting process by using the \textit{cmaes} function to estimate the best-fit parameters and
- the \textit{mcmc} function to assess the uncertainty in the fit. It takes in a model and
-  experimental data, utilising the \textit{Residual} class to compute the difference between
-   the experimental data and the model simulated data. The \textit{Residual} class leverages
-    the model \textit{simulate\_diffraction} function to generate the diffraction pattern,
-     which it then compared with the experimental data.
+the \textit{mcmc} function to assess the uncertainty in the fit. It takes in a model and
+experimental data, utilising the \textit{Residual} class to compute the difference between
+the experimental data and the model simulated data. The \textit{Residual} class leverages
+the model \textit{simulate\_diffraction} function to generate the diffraction pattern,
+which it then compared with the experimental data.
 
 \medskip
 
@@ -192,23 +192,23 @@ consecutive lithography stages.
 \subsubsection{Brief overview of photoresist lithography}
 
 These models are build to simulate the simple structure obtained through techniques like photoresist 
-lithography. It is a technique used to fabricate micro and nano scale structures on substrates. 
+lithography. It is a technique used to fabricate micro and nano-scale structures on substrates. 
 It works by first coating the wafer with a light-sensitive material called photoresist. Then, a patterned
- mask blocks light from specific regions of the photoresist. 
- \begin{figure}[h]
+mask blocks light from specific regions of the photoresist. 
+\begin{figure}[h]
     \centering
     \includegraphics[width=0.4\textwidth]{images/photo_resist.png}
     \caption{Schematic of the photoresist lithography process (taken from wikipedia).}
     \label{fig:lithography}
- \end{figure}
+\end{figure}
 
- \FloatBarrier
+\FloatBarrier
 
- Exposing the wafer to light triggers a 
- chemical change in the exposed photoresist, making it either soluble (positive tone) or insoluble 
- (negative tone) in a developer solution. This developer removes the unwanted photoresist, 
- revealing the desired circuit pattern on the underlying wafer. Optionally, etching can be used to 
- create physical features by removing exposed areas of the substrate.
+Exposing the wafer to light triggers a 
+chemical change in the exposed photoresist, making it either soluble (positive tone) or insoluble 
+(negative tone) in a developer solution. This developer removes the unwanted photoresist, 
+revealing the desired circuit pattern on the underlying wafer. Optionally, etching can be used to 
+create physical features by removing exposed areas of the substrate.
 
  \medskip
 
@@ -217,14 +217,14 @@ While developing our model, we consider lines of nanostructures on a substrate (
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.3\textwidth]{images/lines_modeled.png}
-    \caption{Image obtained with a scanning electron microscope in 
-      top view of the structure for modelling. In red, the average signal over the length of the lines is superimposed.\cite{these_reche}}
+    \caption{Image obtained with a scanning electron microscope in top view of the structure for modelling. 
+    In red, the average signal over the length of the lines is superimposed.\cite{these_reche}}
     \label{fig:lines}
 \end{figure}
 
 \subsubsection{Stacked Trapezoid Model}
 
-A close examination of the cross-section of the lines in Figure \ref{fig:lines} reveals that their shapes can be closely approximated by stacked trapezoids. This crucial observation forms the foundation of our modeling approach.
+A close examination of the cross-section of the lines in Figure \ref{fig:trapezoid} reveals that their shapes can be closely approximated by stacked trapezoids. This crucial observation forms the foundation of our modeling approach.
 
 \medskip
 
@@ -235,13 +235,15 @@ A close examination of the cross-section of the lines in Figure \ref{fig:lines} 
     \label{fig:trapezoid}
 \end{figure}
 
-Figure \ref{fig:trapezoid_model} illustrates the approximation of the model we aim to simulate. 
-The model inputs include a constant height or sets of heights, sidewall angles ($\beta$), and the
- bottom width of the trapezoids. By allowing variable heights for each trapezoid layer, we can 
- achieve better control over the structure, albeit at the cost of increasing the number of 
- parameters to fit. The user can determine the height parameter based on their specific needs. 
- Given the z-coordinates of each corner of the trapezoids, the x-coordinate for each can be 
- calculated using the following formula:
+
+Figure \ref{fig:trapezoid_model} \color{red} it is weird to cite a figure used so far before. Maybe you could add a model that mimic the profile with the same set of parameters \color{black} 
+illustrates the approximation of the model we aim to simulate. 
+The model inputs include a constant height (h) or sets of heights, sidewall angles ($\beta$), and the
+bottom width ($\omega_{0}$) of the trapezoids. By allowing variable heights for each trapezoid layer, we can 
+achieve better control over the structure, albeit at the cost of increasing the number of 
+parameters to fit. The user can determine the height parameter based on their specific needs. 
+Given the z-coordinates of each corner of the trapezoids, the x-coordinate for each can be 
+calculated using the following formula:
 
 \medskip
 
@@ -274,8 +276,8 @@ simulate the rounded corners often found in real structures (see Figure \ref{fig
 Each corner of the trapezoid is rounded using a circle, with the radius of each circle provided 
 as an input by the user and fitted later. Once the radii are known, the corners are approximated 
 by dividing them into even smaller trapezoids. This allows us to use the same diffraction code written for the
- stacked trapezoid model to simulate the rounded corners. With this model, we can simulate the 
- diffraction pattern more accurately, reflecting the real structure more closely.
+stacked trapezoid model to simulate the rounded corners. With this model, we can simulate the 
+diffraction pattern more accurately, reflecting the real structure more closely.
 
 \begin{figure}[h]
     \centering
@@ -287,9 +289,12 @@ by dividing them into even smaller trapezoids. This allows us to use the same di
 \medskip
 
 While this model hasn't been implemented yet, a similar codebase already exists. This existing
-code provides a strong foundation, potentially making implementation a smoother process.
+code provides a strong foundation for future implementation in the new workframe.
 
 \medskip
+
+\color{red} The next paragraph needs to be rephrase. Currently, they implemented the calculation of all the trapezoids from 
+the 2 radius as you mentionned. It is already developped (not perfectly but this is how it was done).\color{black} 
 
 Simulating rounded corners with a large number of trapezoids significantly increases the 
 computational cost of the model. To address this, exploring alternative approaches for representing 
@@ -300,8 +305,15 @@ diffraction pattern. This method has the potential to significantly reduce the c
 complexity compared to using a multitude of trapezoids.
 
 \subsubsection{Overlay model}
+\color{red} The context need to be rewritten here. Check this webpage: https://www.asml.com/en/news/stories/2022/what-is-a-gate-all-around-transistor
+The main argumentation about overlay is that the next generation of transistor are not plannar anymore but in 3D. So you stack layers that can be shifted, introducing overlay
+\color{black} 
 
-Silicon wafers are built layer-by-layer through a series of steps called photolithography. 
+
+
+The latest and future generation of transistors are transitionning from plannar structure towards 3D structure such as fin field-effect (FinFET) and Gate All Around (GAA).
+\color{red} Add a figure to illustrate \color{black} 
+Transistors are built layer-by-layer through a series of lithography steps. 
 Each layer involves depositing a specific material (like a metal for contacts or a 
 special material for transistors) in a defined pattern. Precise alignment between these 
 layers is crucial for the final device to function properly. This means features like 
@@ -313,7 +325,8 @@ on the wafer.
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.5\textwidth]{images/overlay.PNG}
-    \caption{Overlay model.}
+    \caption{Overlay model. \color{red} Top CD is wrong. It is the liwidth after teh shift \color{black} 
+    }
     \label{fig:overlay}
 \end{figure}
 
@@ -321,14 +334,17 @@ on the wafer.
 
 The overlay model is designed to simulate the critical aspect of layer alignment during wafer 
 fabrication. This model builds upon the concept of the stacked trapezoid model, but extends it to 
-capture misalignment effects. It incorporates two sets of trapezoids: one set for each layer. The 
+capture misalignment effects. 
+\color{red} Next sentence is not clear. Maybe just mentionned that a shift or overlay between two lithography process is introduced
+It is not obvious that one layer is 3 trapezoids ...\color{black}
+It incorporates two sets of trapezoids: one set for each layer. The 
 key difference lies in the positioning of the second layer's trapezoids. These are shifted by a 
 specific amount, called the Top Critical Dimension (Top CD), in the x-direction. This shift 
 represents potential misalignment between layers.
 
 \medskip
 
-To calculate the coordinates of the second layer's trapezoids, we can leverage the same method 
+To calculate the coordinates of the second layer trapezoids, we can leverage the same method 
 used for the stacked trapezoid model. However, for the second layer, an additional x-axis shift 
 equal to the Top CD value is applied.
 
@@ -519,60 +535,60 @@ in the project.
 \medskip
 
 In conclusion, parallelisation and GPU acceleration have significantly enhanced the performance
- of our diffraction pattern simulation and fitting code. By leveraging the multiprocessing 
- library and NumPy optimizations, we achieved considerable speedups in CPU-based parallelisation. 
- Transitioning to GPU parallelisation using CuPy further improved execution times, although some
-  operations still perform better in NumPy due to their non-parallelizable nature. Future work 
-  will focus on identifying and optimizing these bottlenecks to fully harness the power of GPU 
-  acceleration. The groundwork laid here provides a robust foundation for further improvements 
-  and scalability in our computational simulations.
+of our diffraction pattern simulation and fitting code. By leveraging the multiprocessing 
+library and NumPy optimizations, we achieved considerable speedups in CPU-based parallelisation. 
+Transitioning to GPU parallelisation using CuPy further improved execution times, although some
+operations still perform better in NumPy due to their non-parallelizable nature. Future work 
+will focus on identifying and optimizing these bottlenecks to fully harness the power of GPU 
+acceleration. The groundwork laid here provides a robust foundation for further improvements 
+and scalability in our computational simulations.
 
 
-  \subsection{On-the-Fly Uncertainty Estimation}
+\subsection{On-the-Fly Uncertainty Estimation}
 
-  Another objective identified in our research was to utilize the code to estimate 
-  uncertainty in real-time during synchrotron experiments. The uncertainty in CD-SAXS experiments 
-  depends on various factors such as exposure time, sample thickness, detector distance, etc. Among 
-  these, exposure time plays a crucial role in determining uncertainty. The study by Sunday et al. \cite{sunday2016evaluation} 
-  provides an excellent example of this relationship (see Figure \ref{fig:exposure}).
-  
-  \begin{figure}[h]
-  \centering
-  \includegraphics[width=0.4\textwidth]{images/exposure.png}
-  \caption{Uncertainty in fit parameters as a function of exposure time. The uncertainty decreases with increasing exposure time. (Sunday et al. \cite{sunday2016evaluation})}
-  \label{fig:exposure}
-  \end{figure}
-  
-  Sunday et al. conducted measurements over a range of angles with specified step sizes for different 
-  acquisition times. Their results, shown in the figure, present representative data cuts for various 
-  order peaks, illustrating the impact of exposure time on data quality. The first-order peak, which 
-  exhibits the most intense scattering, remains well-defined even at shorter acquisition times. However, 
-  as the measurement time decreases, the lower intensity features of the higher-order peaks become 
-  progressively obscured due to the decreasing signal-to-noise ratio.
-  
-  If we could estimate uncertainty in real-time during the experiment, it would enable us to adjust 
-  various parameters including exposure time affecting uncertainty on the fly. Additionally, we could stop the experiment 
-  after measuring a sufficient number of angles. The same paper by Sunday et al. demonstrates that 
-  beyond a certain number of angles, the uncertainty does not change significantly. This approach 
-  could facilitate performing CD-SAXS experiments in laboratory settings with equipment less powerful 
-  than synchrotrons.
-  
-  To investigate this, a simulation was conducted using the stacked trapezoid model. A two-stack 
-  trapezoid was considered with the following parameters: \( h_{1} = h_{2} = 21.5 \) nm, bottom CD = 24 nm, 
-  first sidewall angle = 85°, and second sidewall angle = 90°. The simulation aimed to mimic 
-  data acquisition at different angles with a measurement time of 2 seconds per angle. The uncertainty 
-  was calculated after every 15 angles measured. The results are shown in Figure \ref{fig:uncertainity}.
+Another objective identified in our research was to utilize the code to estimate 
+uncertainty in real-time during synchrotron experiments. The uncertainty in CD-SAXS experiments 
+depends on various factors such as exposure time, sample thickness, detector distance, etc. Among 
+these, exposure time plays a crucial role in determining uncertainty. The study by Sunday et al. \cite{sunday2016evaluation} 
+provides an excellent example of this relationship (see Figure \ref{fig:exposure}).
 
-  \begin{figure}[h]
-  \centering
-  \includegraphics[width=0.8\textwidth]{images/uncertainity.png}
-  \caption{Uncertainty in the fit parameters as a function of the number of angles measured.}
-  \label{fig:uncertainity}
-  \end{figure}
-  
-  As seen in Figure \ref{fig:uncertainity}, the uncertainty levels off after a certain number of angles, similar to the findings by Sunday et al.
-   However, in our simulation, the angle at which uncertainty stabilizes is around 78 degrees, 
-   compared to 30 degrees in their study. This discrepancy could be due to differences in the measured
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.4\textwidth]{images/exposure.png}
+\caption{Uncertainty in fit parameters as a function of exposure time. The uncertainty decreases with increasing exposure time. (Sunday et al. \cite{sunday2016evaluation})}
+\label{fig:exposure}
+\end{figure}
+
+Sunday et al. conducted measurements over a range of angles with specified step sizes for different 
+acquisition times. Their results, shown in the figure, present representative data cuts for various 
+order peaks, illustrating the impact of exposure time on data quality. The first-order peak, which 
+exhibits the most intense scattering, remains well-defined even at shorter acquisition times. However, 
+as the measurement time decreases, the lower intensity features of the higher-order peaks become 
+progressively obscured due to the decreasing signal-to-noise ratio.
+
+If we could estimate uncertainty in real-time during the experiment, it would enable us to adjust 
+various parameters including exposure time affecting uncertainty on the fly. Additionally, we could stop the experiment 
+after measuring a sufficient number of angles. The same paper by Sunday et al. demonstrates that 
+beyond a certain number of angles, the uncertainty does not change significantly. This approach 
+could facilitate performing CD-SAXS experiments in laboratory settings with equipment less powerful 
+than synchrotrons.
+
+To investigate this, a simulation was conducted using the stacked trapezoid model. A two-stack 
+trapezoid was considered with the following parameters: \( h_{1} = h_{2} = 21.5 \) nm, bottom CD = 24 nm, 
+first sidewall angle = 85°, and second sidewall angle = 90°. The simulation aimed to mimic 
+data acquisition at different angles with a measurement time of 2 seconds per angle. The uncertainty 
+was calculated after every 15 angles measured. The results are shown in Figure \ref{fig:uncertainity}.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.8\textwidth]{images/uncertainity.png}
+\caption{Uncertainty in the fit parameters as a function of the number of angles measured.}
+\label{fig:uncertainity}
+\end{figure}
+
+As seen in Figure \ref{fig:uncertainity}, the uncertainty levels off after a certain number of angles, similar to the findings by Sunday et al.
+However, in our simulation, the angle at which uncertainty stabilizes is around 78 degrees, 
+compared to 30 degrees in their study. This discrepancy could be due to differences in the measured
 structures and other factors. Nevertheless, this simulation demonstrates the feasibility of real-time 
 uncertainty estimation during experiments, allowing for parameter adjustments as needed. Further 
 testing with extensive real data is necessary to validate this approach, which is an ongoing effort.
