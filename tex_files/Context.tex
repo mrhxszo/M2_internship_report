@@ -4,11 +4,11 @@
 \medskip
 
 The French Alternative Energies and Atomic Energy Commission (CEA) stands as a cornerstone
-of the nation's research landscape. Its multifaceted expertise encompasses a broad spectrum
-of fields, including nuclear energy, renewable energy, technological research for industry, material sciences, health and life sciences, and defense and security. The CEA's network
+of the nation research landscape. Its multifaceted expertise encompasses a broad spectrum
+of fields, including nuclear energy, renewable energy, technological research for industry, material sciences, health and life sciences, and defense and security. The CEA network
 of research centers spans across France, each with its unique specializations and areas
 of excellence. Among these, CEA Grenoble holds a prominent position, where I have the 
-privilege of pursuing my work-study program. I am part of the labroatory of electrical technology and information (Leti) Institute,
+privilege of pursuing my work-study program. I am part of the laboratory of electrical technology and information (Leti) Institute,
 a research center dedicated to microelectronics and nanotechnologies. More specifically, 
 I was with “Materials and Structures Properties Laboratory” (MSPL) which is under “Technology Platforms 
 Department” (TPFD), one of six different departments of Leti.
@@ -32,7 +32,7 @@ research reactors and nuclear power plants.
 
 \medskip
 
-The CEA didn't stop at just nuclear energy. In the 1960s, they began to diversify into new areas like renewable energy,
+The CEA did not stop at just nuclear energy. In the 1960s, they began to diversify into new areas like renewable energy,
  micro and nanotechnologies, defense, and healthcare. This diversification led to the creation of specialized research
  centers, including the future innovation hub, CEA Grenoble.
 
@@ -44,16 +44,16 @@ from around the world.
 
 \medskip
 
-It came to be known as France's "atomic capital" due to its research reactors. However, their influence went far beyond
+It came to be known as France "atomic capital" due to its research reactors. However, their influence went far beyond
  nuclear. They developed their first integrated circuit in 1965, launching their journey into micro and nanotechnologies. 
  They also played a key role in creating Minatec, the first European hub for excellence in this field. In addition, they 
  became a leader in renewable energy research with the Institut national de l'énergie solaire (Ines).
- European synchrotron radiation facility (ESRF) was also established in Grenoble in 1988, further solidifying the city's
+ European synchrotron radiation facility (ESRF) was also established in Grenoble in 1988, further solidifying the city
  reputation as a scientific hub.
 \medskip
 
 Today, it is a research powerhouse with over 2,500 researchers and technicians. Their campus houses specialized
- institutes in various fields, from healthcare to digital technologies. It's also the headquarters for CEA Tech, the
+ institutes in various fields, from healthcare to digital technologies. It is also the headquarters for CEA Tech, the
  technological branch of the CEA with over 4,500 researchers across France.
 
 \begin{figure}[h!]
@@ -64,16 +64,16 @@ Today, it is a research powerhouse with over 2,500 researchers and technicians. 
 
 \subsubsection{Sectors of activity}
 
-CEA Grenoble plays a pivotal role in the nation's economic and technological 
+CEA Grenoble plays a pivotal role in the nation economic and technological 
 advancement through its groundbreaking research and innovations across diverse fields.
 
 \begin{itemize}
   \item \textbf{Energy and Sustainability}: Supporting current and future nuclear power, exploring solar, hydrogen for carbon
-   neutrality (2050), researching SMRs (Small modular reactors) and thermonuclear fusion.
-  \item \textbf{Digital Technologies}: Contributing through the SPIN program for spintronics (frugal, agile, sustainable computing)
-   aligned with France 2030 plan.
+  neutrality (2050), researching SMRs (Small modular reactors) and thermonuclear fusion.
+  \item \textbf{Digital Technologies}: Contributing through the SPIN program for spintronic (frugal, agile, sustainable computing)
+  aligned with France 2030 plan.
   \item \textbf{Healthcare}: Distinguished research in biology and biotechnology for health, addressing current and future challenges.
-   (e.g., Laboratoire de biologie et biotechnologie pour la santé)
+  (e.g., Laboratoire de biologie et biotechnologie pour la santé)
   \item \textbf{Defense}: Traditionally significant role, developing cutting-edge technologies for national security and defense 
   (less documented for Grenoble).
 \end{itemize}
@@ -149,9 +149,9 @@ fitting and result analysis.
 
 \medskip
 
-Furthermore, the existing code suffered from slow execution speeds due to a lack of optimisation.
-To address this, I implemented optimisations and parallelisation techniques, significantly 
-improving the code's efficiency.
+Furthermore, the existing code suffered from slow execution speeds due to a lack of optimization.
+To address this, I implemented optimizations and parallelization techniques, significantly 
+improving the code efficiency.
 
 \medskip
 
@@ -161,22 +161,22 @@ improving the code's efficiency.
 \medskip
 
 The initial aim of this project was commendable - to improve the existing CD-SAXS data analysis 
-codebase. However, as we delved deeper, the project's objectives evolved into a series of 
+codebase. However, as we delved deeper, the project objectives evolved into a series of 
 well-defined, targeted enhancements. This iterative approach ensured that our efforts addressed 
 the specific needs of researchers at CEA Grenoble.
 
-Here's a breakdown of the key objectives that emerged:
+Here is a breakdown of the key objectives that emerged:
 
 \begin{itemize}
     \item \textbf{Unleashing Computational Power:}
     \begin{itemize}
-        \item \textbf{Vectorization for Server Optimization:} Standard code often struggles to fully leverage the parallel processing capabilities of modern servers. We identified the need to vectorize the code, allowing it to efficiently utilize the computational power available on CEA's powerful servers. This significantly boosted the application's overall processing speed.
+        \item \textbf{Vectorization for Server Optimization:} Standard code often struggles to fully leverage the parallel processing capabilities of modern servers. We identified the need to vectorize the code, allowing it to efficiently utilize the computational power available on CEA powerful servers. This significantly boosted the applications overall processing speed.
         \item \textbf{GPU Acceleration - Pushing the Limits:} Recognizing the ever-increasing capabilities of Graphics Processing Units (GPUs), we explored the potential of integrating GPU acceleration into the code. This would potentially unlock even faster performance, enabling us to tackle increasingly complex datasets.
     \end{itemize}
     \item \textbf{User-Centric Design:}
     \begin{itemize}
         \item \textbf{Building a Coherent Application:} The existing code, while functional, lacked the user-friendliness and intuitiveness necessary. We prioritized creating a well-structured, modular application. This would not only simplify data fitting and analysis but also make future feature additions and maintenance easier and more efficient.
-        \item \textbf{Addition of different simulation models in the same codebase:} The original codebase had several independant simulation models: a model composed of stacked trapezoid, an overlay model and a rounded trapezoid model. We aimed to integrate these three models into a single, cohesive codebase. This consolidation would streamline the process of selecting and applying different models, enhancing the overall user experience.
+        \item \textbf{Addition of different simulation models in the same codebase:} The original codebase had several independent simulation models: a model composed of stacked trapezoid, an overlay model and a rounded trapezoid model. We aimed to integrate these three models into a single, cohesive codebase. This consolidation would streamline the process of selecting and applying different models, enhancing the overall user experience.
       \end{itemize}
     \item \textbf{Quantifying Uncertainty - Confidence in Results:}
     \begin{itemize}
@@ -188,4 +188,4 @@ Here's a breakdown of the key objectives that emerged:
     \end{itemize}
 \end{itemize}
 
-This refined set of objectives ensured that the project delivered valuable enhancements tailored to the needs of CEA researchers. The project not only improved the code's performance but also transformed it into a user-friendly and powerful tool for analyzing CD-SAXS data with greater confidence.
+This refined set of objectives ensured that the project delivered valuable enhancements tailored to the needs of CEA researchers. The project not only improved the code performance but also transformed it into a user-friendly and powerful tool for analyzing CD-SAXS data with greater confidence.

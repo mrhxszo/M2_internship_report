@@ -6,8 +6,8 @@ After outlining the context of the work-study program and describing the techniq
 on, it is finally time to discuss my contributions to the project. First, I will explore 
 the design I implemented and explain why this specific design was chosen. Next, we will 
 examine the simulation models I developed and their applications. Following this, I will 
-detail the optimization and parallelisation of the code that was done to enhance its performance. 
-Finally, we will discuss how this optimized code could be utilised to estimate uncertainty
+detail the optimization and parallelization of the code that was done to enhance its performance. 
+Finally, we will discuss how this optimized code could be utilized to estimate uncertainty
 in real-time during synchrotron experiments.
 
 \subsection{Design}
@@ -15,7 +15,7 @@ in real-time during synchrotron experiments.
 \color{red} I try to re-word here. I found that you are using to general world, like system, ...
 I would recommend to use words with a clearer meaning so we know exactly what you are talking about \color{black}
 
-To gain a clear understanding of how the developped algorithm work, the design of the algorithm is illustrated with the help of an 
+To gain a clear understanding of how the developed algorithm work, the design of the algorithm is illustrated with the help of an 
 UML diagram in figure \ref{fig:UML}. This diagram offers a roadmap, highlighting the various components and their interactions.
 We will then delve deeper to explore each component role in the algorithm, as explained in the previous section.
 \subsubsection{Components}
@@ -48,7 +48,7 @@ the model diffraction pattern and compare it with the experimental data.
 \color{red}Simulation interface and Geometry interface have their name 'inversed' on the UML. Chose which one you want to use and unify: simulation interface or interface simulation.
 I found the explanation of Simulation and Geometry interface really not clear.
 Mention what is their role, being the interface first
-And then mention that they build to simplify future model building (not having afterward to have function geometry dependant)
+And then mention that they build to simplify future model building (not having afterward to have function geometry dependent)
 \color{black}
 
 \subsubsection*{\textbf{Simulation interface:}}
@@ -88,7 +88,7 @@ and \textit{Geometry}, along with specific model implementations like the
 \textit{StackedTrapezoidSimulation}. The \textit{Fitter} class orchestrates
 the fitting process by using the \textit{cmaes} function to estimate the best-fit parameters and
 the \textit{mcmc} function to assess the uncertainty in the fit. It takes in a model and
-experimental data, utilising the \textit{Residual} class to compute the difference between
+experimental data, utilizing the \textit{Residual} class to compute the difference between
 the experimental data and the model simulated data. The \textit{Residual} class leverages
 the model \textit{simulate\_diffraction} function to generate the diffraction pattern,
 which it then compared with the experimental data.
@@ -116,7 +116,7 @@ The previous design adopted a monolithic approach, where the fitting and simulat
     \centering
     \includegraphics[width=0.5\textwidth]{images/monolithic.png}
     \caption{Monolithic design of the previous version. This script combined all the functions for the stacked trapezoid model
-     in one file.}
+    in one file.}
     \label{fig:monolithic_design}
 \end{figure}
 
@@ -158,7 +158,7 @@ ensuring that the component runs as efficiently as possible.
 
 \medskip
 
-\color{red}I propose that you start before teh simulation model with the paragraph Brief overview of photoresist lithography.
+\color{red}I propose that you start before the simulation model with the paragraph Brief overview of photoresist lithography.
 That enable to introduce the model. \color{black}
 
 
@@ -294,7 +294,7 @@ code provides a strong foundation for future implementation in the new workframe
 \medskip
 
 \color{red} The next paragraph needs to be rephrase. Currently, they implemented the calculation of all the trapezoids from 
-the 2 radius as you mentionned. It is already developped (not perfectly but this is how it was done).\color{black} 
+the 2 radius as you mentioned. It is already developed (not perfectly but this is how it was done).\color{black} 
 
 Simulating rounded corners with a large number of trapezoids significantly increases the 
 computational cost of the model. To address this, exploring alternative approaches for representing 
@@ -306,12 +306,12 @@ complexity compared to using a multitude of trapezoids.
 
 \subsubsection{Overlay model}
 \color{red} The context need to be rewritten here. Check this webpage: https://www.asml.com/en/news/stories/2022/what-is-a-gate-all-around-transistor
-The main argumentation about overlay is that the next generation of transistor are not plannar anymore but in 3D. So you stack layers that can be shifted, introducing overlay
+The main argumentation about overlay is that the next generation of transistor are not planar anymore but in 3D. So you stack layers that can be shifted, introducing overlay
 \color{black} 
 
 
 
-The latest and future generation of transistors are transitionning from plannar structure towards 3D structure such as fin field-effect (FinFET) and Gate All Around (GAA).
+The latest and future generation of transistors are transitioning from planar structure towards 3D structure such as fin field-effect (FinFET) and Gate All Around (GAA).
 \color{red} Add a figure to illustrate \color{black} 
 Transistors are built layer-by-layer through a series of lithography steps. 
 Each layer involves depositing a specific material (like a metal for contacts or a 
@@ -325,7 +325,7 @@ on the wafer.
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.5\textwidth]{images/overlay.PNG}
-    \caption{Overlay model. \color{red} Top CD is wrong. It is the liwidth after teh shift \color{black} 
+    \caption{Overlay model. \color{red} Top CD is wrong. It is the linewidth after the shift \color{black} 
     }
     \label{fig:overlay}
 \end{figure}
@@ -335,7 +335,7 @@ on the wafer.
 The overlay model is designed to simulate the critical aspect of layer alignment during wafer 
 fabrication. This model builds upon the concept of the stacked trapezoid model, but extends it to 
 capture misalignment effects. 
-\color{red} Next sentence is not clear. Maybe just mentionned that a shift or overlay between two lithography process is introduced
+\color{red} Next sentence is not clear. Maybe just mentioned that a shift or overlay between two lithography processes is introduced
 It is not obvious that one layer is 3 trapezoids ...\color{black}
 It incorporates two sets of trapezoids: one set for each layer. The 
 key difference lies in the positioning of the second layer of trapezoids. These are shifted by a 
@@ -438,12 +438,12 @@ a solid foundation for future improvements and extensions. The versatility and p
 it a valuable tool in the continuous effort to refine our simulations and better understand the underlying physical structures.
 
 
-\subsection{Parallelisation and GPU Acceleration}
+\subsection{Parallelization and GPU Acceleration}
 
 The simulation of diffraction patterns can be computationally intensive, especially when dealing with large datasets or complex models. 
 Given that the code is written in Python, which is inherently slower than compiled languages like C++, optimizing for performance is crucial. 
 One effective strategy for improving performance is parallelisation. By distributing the computational workload across multiple cores or processors, 
-we can significantly reduce simulation time. In this section, we will briefly discuss parallelisation and give an overview of the possible strategies for parallelisation 
+we can significantly reduce simulation time. In this section, we will briefly discuss parallelization and give an overview of the possible strategies for parallelization 
 on both Graphics Processing Unit (GPU) and Central Processing Unit (CPU).
 
 
@@ -451,16 +451,16 @@ on both Graphics Processing Unit (GPU) and Central Processing Unit (CPU).
 
 \subsubsection{Overview of the concept of parallelisation}
 
-Parallelisation involves breaking down tasks into independent units. Instead of performing a complex calculation in one go, the task is 
+Parallelization involves breaking down tasks into independent units. Instead of performing a complex calculation in one go, the task is 
 distributed across multiple processors for simultaneous processing. This approach leverages the power of modern hardware, with multiple cores 
 on a single processor or distributed computing systems. The key is to achieve the right balance: tasks must be independent to avoid communication 
 overhead yet large enough for efficient processing. While challenges exist, such as managing communication and limited parallelizability for certain 
-problems, parallelisation is a game-changer in fields like scientific computing, machine learning, and video processing.
+problems, parallelization is a game-changer in fields like scientific computing, machine learning, and video processing.
 
 \medskip
 
 If we can use the GPU to perform calculations in parallel, we can significantly accelerate the calculations. However, the GPU is not as 
-flexible as the CPU. It is designed for parallel processing of large amounts of data, making it ideal for specific tasks like matrix multiplication. Nevetheless, 
+flexible as the CPU. It is designed for parallel processing of large amounts of data, making it ideal for specific tasks like matrix multiplication. Nevertheless, 
 the GPU is not well-suited for tasks that require branching or recursion, as these can slow down processing speed. Therefore, to take full advantage of 
 the GPU, we need to structure our code in a way that aligns with the strength of GPU.
 
@@ -472,22 +472,22 @@ the GPU, we need to structure our code in a way that aligns with the strength of
     \caption{Comparison between GPU and CPU. The GPU has more cores but is less flexible than the CPU, making it suitable for simpler parallel tasks. \cite{gpu_vs_cpu}}
 \end{figure}
 
-\subsubsection{Parallelisation Strategies}
+\subsubsection{Parallelization Strategies}
 
 To parallelize the code, we need to identify the independent parts. In both the \textit{cmaes} and \textit{mcmc} algorithms, a population is generated 
-for each generation (or step), and each individual in the population is evaluated independently thourhg the calculation of the goodness of fit. Since one generation 
+for each generation (or step), and each individual in the population is evaluated independently through the calculation of the goodness of fit. Since one generation 
 depends on the best fit of the previous generation, parallelizing the generation is not possible. However, parallelizing the evaluation of individuals 
 in the population of one generation is possible.
 
 \medskip
 
-Initially, to avoid the complexity of GPU parallelisation, we used the multiprocessing library in Python to parallelize the code. This library allows 
+Initially, to avoid the complexity of GPU parallelization, we used the multiprocessing library in Python to parallelize the code. This library allows 
 us to run multiple processes in parallel, each on a different core. We used the \textit{Pool} class from the multiprocessing library to create a pool 
 of workers, each evaluating the goodness of fit. This approach reduced computation time significantly, as multiple individuals can be evaluated simultaneously.
 
 \medskip
 
-The initial CDSAXS algorithms contained multiple for-loops, making the parallelisation not possible. One of my first task was to replace
+The initial CDSAXS algorithms contained multiple for-loops, making the parallelization not possible. One of my first task was to replace
 replaced for-loops by NumPy operations. Indeed, NumPy is a highly optimized library for numerical operations.
 The major challenge was that the quantities we wanted to perform operations on were not of the same shape, requiring the use of NumPy to broadcast the different arrays
 we wanted to perform the operations on (see figure \ref{fig:broadcasting} for an example).
@@ -525,7 +525,7 @@ documentation page \cite{cupy}).
 \FloatBarrier
 
 The performances of the code between non-vectorized, vectorized and GPU compatible are presented on the figure
-\ref{fig:cupy}. The are significant improvments between the vectorized and non vectorized code, more than an order of magnitude gain in time.
+\ref{fig:cupy}. The are significant improvements between the vectorized and non vectorized code, more than an order of magnitude gain in time.
 However, the transition from a vectorized code to the GPU version only provided a marginal gain.
 This can be explained by the fact that the difference between the GPU and vectorized code is essentially replacing NumPy operations with CuPy operations.
 And some operations are more efficient in NumPy than in CuPy. For example, cumulative sum in CuPy is slower than in 
@@ -539,10 +539,10 @@ in the project.
 
 \medskip
 
-In conclusion, parallelisation and GPU acceleration have significantly enhanced the performance
+In conclusion, parallelization and GPU acceleration have significantly enhanced the performance
 of our diffraction pattern simulation and fitting code. By leveraging the multiprocessing 
 library and NumPy optimizations, we achieved considerable speedups in CPU-based parallelisation. 
-Transitioning to GPU parallelisation using CuPy further improved execution times, although some
+Transitioning to GPU parallelization using CuPy further improved execution times, although some
 operations still perform better in NumPy due to their non-parallelizable nature. Future work 
 will focus on identifying and optimizing these bottlenecks to fully harness the power of GPU 
 acceleration. The groundwork laid here provides a robust foundation for further improvements 
