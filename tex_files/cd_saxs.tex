@@ -35,34 +35,33 @@ composition, providing a richer data set.
 
 \medskip
 
-CD-SAXS, a promising technique for nanostructure electronics, uses a transmission geometry, sending the beam through the sample and the 750 micrometer-thick silicon wafer. The x-ray spot size varying between 10-1000 $\mu$m, it enable the measurment of small patterned areas. 
-Studies have shown CD-SAXS's effectiveness in characterizing the shape and spacing of nanometer-sized patterns \cite{sunday_2015}.
+CD-SAXS, a promising technique for nanostructure electronics, uses a transmission geometry, sending the beam through the sample and the 750 micrometer-thick silicon wafer. The x-ray spot size varying between 10-1000 $\mu$m, it enable the measurement of small patterned areas. 
+Studies have shown CD-SAXS effectiveness in characterizing the shape and spacing of nanometer-sized patterns \cite{sunday_2015}.
 
 \medskip
-CD-SAXS  utilises variable-angle transmission scattering. By rotating the sample, it can probe the vertical profile of the nanostructures. This allows 
+CD-SAXS utilizes variable-angle transmission scattering. By rotating the sample, it can probe the vertical profile of the nanostructures. This allows 
 for reconstructing their shape and composition in two or even three dimensions.
 We can think of it as a diffraction experiment for single crystals, but instead of a crystal, the 
 periodic array of nanostructures acts like one. This technique excels at reconstructing 
-intricate shapes smaller than 15 nm and with spacings around 30 nm, dimensions crucial for 
+intricate shapes smaller than 15 nm and with spacing around 30 nm, dimensions crucial for 
 the semiconductor industry. \cite{first_cdsaxs_article}
 
 \medskip
-While CD-SAXS was demonstrated very useful, the main limitation is inherent to its geometry. The beam needs to go thourgh the 750 micrometer-thick silicon wafer.
+While CD-SAXS was demonstrated very useful, the main limitation is inherent to its geometry. The beam needs to go through the 750 micrometer-thick silicon wafer.
 This is critical for x-ray energy below 17 keV because a major part of the beam is absorbed. The first CD-SAXS studies were conducted in synchrotron where the energy
-of the x-rays can be tuned and where the brillance is the highest. For laboratory sources, it is currently still an issue since there is no source with enough photons to enable
-efficient laboratory measurments. This is a major constrain for the spread of CD-SAXS where a tool in the factory is required to have a direct control during the production. 
+of the x-rays can be tuned and where the brilliance is the highest. For laboratory sources, it is currently still an issue since there is no source with enough photons to enable
+efficient laboratory measurements. This is a major constrain for the spread of CD-SAXS where a tool in the factory is required to have a direct control during the production. 
 
 \medskip
 A possibility to go around the absorption limitation is to perform grazing-incidence experiment where the beam is now reflected at the surface of the sample. This technique, 
 called GISAXS become more relevant. It uses X-rays near the critical angle of the probed film resulting in a large sampling area and statistically significant data. This large area allows for faster measurements, enabling in situ kinetic studies.
 It has the same resolution of CD-SAXS but enable to examine nanostructures across large areas, i.e. the beam footprint on the sample surface 
-being the beam size divided by the sinus of the incident angle of the beam on the sample. For GISAXS, the incident angle is usually around 0.3 deg, making a 10 $\mu$m beam footprint equal to 2 mm   
-for semiconductors. 
+being the beam size divided by the sinus of the incident angle of the beam on the sample. For GISAXS, the incident angle is usually around 0.3 deg, making a 10 $\mu$m beam footprint equal to 2 mm for semiconductors. 
 
 \medskip
 Early research on X-ray characterization of patterned nanostructures used reflection
 methods like X-ray diffraction (XRD) and grazing-incidence small-angle X-ray scattering (GISAXS). 
-These techniques demonstrated X-ray's sensitivity to features shape and spacing.
+These techniques demonstrated X-rays sensitivity to features shape and spacing.
 Furthermore, X-rays can probe buried features due to their sensitivity to electron density contrast. For instance, a GaInAs/InP multilayer was studied with high-resolution XRD, revealing 
 the sensitivity to both the grating and strain between layers \cite{Baumbach_Lübbert_Gailhanou_2000}.
 
@@ -84,8 +83,7 @@ During this project, I had the opportunity to work and observe how CD-SAXS
 measurements are performed at the European Synchrotron Radiation Facility (ESRF)
 in Grenoble, France. The ESRF is a world-renowned research facility that provides
 intense X-ray beams for a wide range of scientific experiments. Specifically,
-I worked with the BM02 beamline, which is dedicated to X-ray scattering and
-   diffraction experiments.
+I worked with the BM02 beamline, which is dedicated to X-ray scattering and diffraction experiments.
 
 \begin{figure}[h]
 \centering
@@ -106,9 +104,9 @@ and the actual experimental setup is depicted in Figure \ref{fig:exp_setup_real}
 \medskip
 
 One of the major challenges in the experiment is the alignment of the sample. Since the area of interest is small, roughly a mm by a mm,
-the sample needs to be perfectly postioned at the center of the rotation. Then the rotation axis is brought to the beam position. 
+the sample needs to be perfectly positioned at the center of the rotation. Then the rotation axis is brought to the beam position. 
 The goal is to keep the same area sample in the sample while rotating. This is achieved by 
-aiming a camera at the sample and focusing on the beam's position. A short  measurement is then performed to observe the diffraction pattern of the sample.
+aiming a camera at the sample and focusing on the beam position. A short measurement is then performed to observe the diffraction pattern of the sample.
 The sample is adjusted until the diffraction pattern is horizontal and centered.
 
 \begin{figure}[h]
@@ -132,11 +130,10 @@ The sample is adjusted until the diffraction pattern is horizontal and centered.
     
     \caption{CD-SAXS instrument layout. The X-ray beam (thick solid lines) is transmitted through the 
     patterned sample. Scattered intensity (I) is measured by a 2D detector as a function of scattering angle $(2\theta)$ 
-    and converted to $I(Q_{x})$, where $Q_{x}$ is defined in the text. Measurements are performed at various angles $(\omega')$. b) After conversion from the $(Q_{x},\omega)$
+    and converted to $I(Q_{x})$, where $Q_{x}$ is defined in the text. Measurements are performed at various angles $(\omega)$. b) After conversion from the $(Q_{x},\omega)$
     plane, the intensities from a trapezoidal cross section would appear as predicted in
-   the model calculation on b, plotted as I as a function of the
-   Fourier component, $Q_{Z}$.}
-   \label{fig:isolated_line}
+    the model calculation on b, plotted as I as a function of the Fourier component, $Q_{Z}$.}
+    \label{fig:isolated_line}
 \end{figure}
 
 \color{red} Figure 10: Change the figure Intensity vs $Q_z$. Add an extra image where you show the rotation and how you convert in qz.
@@ -153,23 +150,23 @@ theory. Building upon this, we will now describe the diffraction of a collimated
 \begin{equation}
     I(\mathbf{Q}) = \varOmega | \mathcal{F}(\mathbf{Q}) |^2,
 \end{equation}
-    
+
 where $I(\mathbf{Q})$ represents the scattered intensity as a function of the scattering
 vector $\mathbf{Q}$, $\Omega$ is a variable independent of $\mathbf{Q}$,
 and $\mathcal{F}(\mathbf{Q})$ is the Fourier transform of a function describing the electronic density
-distribution within the nanoimprinted pattern. 
-    
+distribution within the nanoimprinted pattern.
+
 This relationship is considered valid within the limitations of the CD-SAXS geometry,
-which includes a transmission geometry and a low probability of multiple scattering.    
-Unfortunately, the conjugate product \color{red} there is no conjugated product in the equation here. Maybe I can suggest: Unfortunately, the measured intensity is the absolute square of the fourier transform. Therefore there is a loss of the phase information ... \color{black}, in the equation leads to a loss of phase
+which includes a transmission geometry and a low probability of multiple scattering.
+Unfortunately, the conjugate product \color{red} there is no conjugated product in the equation here. Maybe I can suggest: Unfortunately, the measured intensity is the absolute square of the Fourier transform. Therefore there is a loss of the phase information ... \color{black}, in the equation leads to a loss of phase
 information, making it impossible to analytically extract $F(\mathbf{Q})$ from $I(\mathbf{Q})$.
 Therefore, the primary method for determining feature dimensions involves constructing
-a real-space model of the pattern's cross-section. The Fourier transform of this 
+a real-space model of the pattern cross-section. The Fourier transform of this 
 model is then fitted to the experimental CD-SAXS data.
 
 \medskip
 
-During my work-study program, we were mainly concerned with a periodic array of lines, refered to line gratings afterwards (see figure \ref{fig:isolated_line}). The cross-section of
+During my work-study program, we were mainly concerned with a periodic array of lines, referred to line gratings afterwards (see figure \ref{fig:isolated_line}). The cross-section of
 these lines can be represented as a stack of trapezoids (see figure \ref{fig:trapezoid_model}).
 
 \begin{figure}[h]
@@ -177,9 +174,9 @@ these lines can be represented as a stack of trapezoids (see figure \ref{fig:tra
     \includegraphics[width=0.3\textwidth]{images/trapezoid.png}
     \caption{Cross-section of a nanostructure line represented as a stack of trapezoids.}
     \label{fig:trapezoid_model}
-    
 \end{figure}
-The analytical fourier transform of a trapezoidal shape can be calculated with the following expression \cite{sunday_2015}:
+
+The analytical Fourier transform of a trapezoidal shape can be calculated with the following expression \cite{sunday_2015}:
 \begin{equation}
     F\left(q_{x}, q_{z}\right)=\frac{1}{q_{x}}\left[-\frac{m_{1}}{t_{1}} e^{-i q_{x}\left(\frac{\omega_{0}}{2}\right)}\left(1-e^{-i h\left(\frac{q_{x}}{m_{1}}+q_{z}\right)}\right)\right. \\ +\frac{m_{2}}{t_{2}} e^{-i q_{x}\left(\frac{\omega_{0}}{2}\right)}\left(1-e^{\left.-i h\left(\frac{q_{x}}{m_{2}}+q_{z}\right)\right)}\right]
     \label{eq:trapezoidal_ft}
@@ -189,7 +186,7 @@ where,
 \( \begin{array}{l}\mathrm{m}_{1}=\tan \left(\beta_{1}\right) \\ m_{2}=\tan \left(\pi-\beta_{r}\right) \\ t_{1}= q_{x}+m_{1} q_{z} \\ t_{2}= q_{x}+m_{2} q_{z}\end{array} \)
 
 The different parameters used in the equations are illustrated in figure \ref{fig:trapezoid_model}.
-\color{red} You should probably add a sentence to describe the parameters, linewidth, sidewall angles. It might help for future explantions \color{black}
+\color{red} You should probably add a sentence to describe the parameters, linewidth, sidewall angles. It might help for future explanations \color{black}
 
 \medskip
 \color{red} Wrong tabulation after medskip \color{black}
@@ -199,8 +196,8 @@ so,
     I_{0}(\mathbf{q}) = |F(q)|^{2}
 \end{equation}
 
-Our analytical model predicts a perfect shape. In order to take into account defects inherent to th elithography process, 
-additionals factor are introduced to account for an additional decay of scattered intensity $I(Q_{x})$.
+Our analytical model predicts a perfect shape. In order to take into account defects inherent to the lithography process, 
+additional factors are introduced to account for an additional decay of scattered intensity $I(Q_{x})$.
 These defects can be illustrated as variations a distribution in the in-depth line profile. 
 Two main distributions are considered:
 \begin{itemize}
@@ -224,13 +221,13 @@ where $DW$ is the Debye-Waller factor.
 
 While CD-SAXS excels at detecting deviations from a perfect grating pattern in buried structures, it requires 
 additional processing to convert the raw data into a meaningful real-world structure. This process involves using 
-an inverse algorithm, which essentially translates the scattered intensity information back into the original structure's 
+an inverse algorithm, which essentially translates the scattered intensity information back into the original structures 
 characteristics.
 
 \medskip
 \color{red} I am changing how it is built. Starting with describing the problem so stating what we start with, what we want and the objective \color{black}
 
-CD-SAXS measurments provides experimental data. The objective of the inverse fitting is to iterate over a high number of different line profile (represented as various combination of stacked trapezoids)
+CD-SAXS measurements provides experimental data. The objective of the inverse fitting is to iterate over a high number of different line profile (represented as various combination of stacked trapezoids)
 and to converge towards the profile that its Fourier Transform will best match the experimental data. While the objective seems simple to describe, 
 the problem is complex. Traditional optimization methods used for refinement often fall short when dealing with 
 complex internal structures with numerous parameters, either being trap in local minima or not converging toward the same solutions.
@@ -294,8 +291,8 @@ explore the parameter space and converge on the optimal solution.
 
 \medskip
 
-For CD-SAXS experiment, the algorithm starts with the experimental data collected. Then, a series of in-depth line profile generated, through a set of paramters as describe earlier. 
-Afterwards, the calculated analytical fourier transform of the is compared with the experimental data using a mean-absolute error log:
+For CD-SAXS experiment, the algorithm starts with the experimental data collected. Then, a series of in-depth line profile generated, through a set of parameters as describe earlier. 
+Afterwards, the calculated analytical Fourier transform of the is compared with the experimental data using a mean-absolute error log:
 
 \medskip
 
@@ -324,11 +321,11 @@ These results suggest that CMAES offers a powerful tool for analyzing
 complex nanostructures with X-ray scattering data, particularly when 
 dealing with limited computational resources or tight time constraints.
 
-\subsubsection{Uncertainity estimation by Monte Carlo Markov Chain(MCMC) method}
+\subsubsection{Uncertainty estimation by Monte Carlo Markov Chain(MCMC) method}
 \label{sec:mcmc_cd-saxs}
 
-The CMAES algorithm provides a single best-fit solution for the nanostructure parameters. However, it's essential to understand the uncertainty associated with these parameters.
-This uncertainity relates to the different possible combinations of parameters that could result in a similar goodness of fit. 
+The CMAES algorithm provides a single best-fit solution for the nanostructure parameters. However, it is essential to understand the uncertainty associated with these parameters.
+This uncertainty relates to the different possible combinations of parameters that could result in a similar goodness of fit. 
 For instance, decreasing slightly height of one trapezoid and increasing the height of an other one can result in a similar goodness of fit.
 To address this, we can use MCMC algorithm to explore and find all the sets of population that can result in the same goodness of fit.
 
@@ -368,7 +365,7 @@ Here is the overview of the algorithm:
     A random number $\alpha$ between 0 and 1 is then generated. If $\alpha < P_i$, M$_i$ is accepted; otherwise, it is rejected, and a new proposal is generated from M$_{i-1}$.
     \item \textbf{Equilibrium and resampling:} Steps 2-4 are repeated until the model population reaches an equilibrium. To avoid correlations between accepted models, the population is resampled (e.g., every 50 steps in this case).
     \item \textbf{Uncertainty calculation:} The uncertainties are calculated from the final accepted model population and represent a 95\% confidence intervals. The step size for generating proposals was optimized to achieve an
-     acceptance probability between 0.25 and 0.35, a range known to yield the fastest convergence.
+    acceptance probability between 0.25 and 0.35, a range known to yield the fastest convergence.
 \end{enumerate}
 
 I used a very similar algorithm but with some modifications to increase the efficiency, we will discuss this in the next section.
