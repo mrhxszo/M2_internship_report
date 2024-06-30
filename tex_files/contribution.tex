@@ -63,7 +63,7 @@ Like Simulation interface. This is the base class for all geometry models.
 
 \subsubsection*{\textbf{Model:}}
 
-In this UML diagram (Figure \ref{fig:UML}), we present the implementation of the stacked trapezoid model.
+In this UML diagram (figure \ref{fig:UML}), we present the implementation of the stacked trapezoid model.
  Central to this model is the \textit{StackedTrapezoidSimulation} class, which is a composite class 
  integrating \textit{StackedTrapezoidGeometry} and \textit{StackedTrapezoidDiffraction} classes. The 
  \textit{StackedTrapezoidGeometry} class handles all geometrical calculations and stores the relevant 
@@ -224,7 +224,7 @@ While developing our model, we consider lines of nanostructures on a substrate (
 
 \subsubsection{Stacked Trapezoid Model}
 
-A close examination of the cross-section of the lines in Figure \ref{fig:trapezoid} reveals that their shapes can be closely approximated by stacked trapezoids. This crucial observation forms the foundation of our modeling approach.
+A close examination of the cross-section of the lines in figure \ref{fig:trapezoid} reveals that their shapes can be closely approximated by stacked trapezoids. This crucial observation forms the foundation of our modeling approach.
 
 \medskip
 
@@ -272,7 +272,7 @@ models will inherit from or build upon the \textit{StackedTrapezoidSimulation} a
 \subsubsection{Rounded corners model}
 
 The rounded corners model is an extension of the stacked trapezoid model. It is designed to 
-simulate the rounded corners often found in real structures (see Figure \ref{fig:trapezoid}). 
+simulate the rounded corners often found in real structures (see figure \ref{fig:trapezoid}). 
 Each corner of the trapezoid is rounded using a circle, with the radius of each circle provided 
 as an input by the user and fitted later. Once the radii are known, the corners are approximated 
 by dividing them into even smaller trapezoids. This allows us to use the same diffraction code written for the
@@ -288,7 +288,7 @@ diffraction pattern more accurately, reflecting the real structure more closely.
 
 \medskip
 
-While this model hasn't been implemented yet, a similar codebase already exists. This existing
+While this model has not been implemented yet, a similar codebase already exists. This existing
 code provides a strong foundation for future implementation in the new workframe.
 
 \medskip
@@ -338,7 +338,7 @@ capture misalignment effects.
 \color{red} Next sentence is not clear. Maybe just mentionned that a shift or overlay between two lithography process is introduced
 It is not obvious that one layer is 3 trapezoids ...\color{black}
 It incorporates two sets of trapezoids: one set for each layer. The 
-key difference lies in the positioning of the second layer's trapezoids. These are shifted by a 
+key difference lies in the positioning of the second layer of trapezoids. These are shifted by a 
 specific amount, called the Top Critical Dimension (Top CD), in the x-direction. This shift 
 represents potential misalignment between layers.
 
@@ -443,12 +443,13 @@ it a valuable tool in the continuous effort to refine our simulations and better
 The simulation of diffraction patterns can be computationally intensive, especially when dealing with large datasets or complex models. 
 Given that the code is written in Python, which is inherently slower than compiled languages like C++, optimizing for performance is crucial. 
 One effective strategy for improving performance is parallelisation. By distributing the computational workload across multiple cores or processors, 
-we can significantly reduce simulation time. In this section, we will briefly discuss parallelisation and overview the strategies for parallelisation 
-on both GPU and CPU.
+we can significantly reduce simulation time. In this section, we will briefly discuss parallelisation and give an overview of the possible strategies for parallelisation 
+on both Graphics Processing Unit (GPU) and Central Processing Unit (CPU).
+
 
 \medskip
 
-\subsubsection{Overview of Parallelisation}
+\subsubsection{Overview of the concept of parallelisation}
 
 Parallelisation involves breaking down tasks into independent units. Instead of performing a complex calculation in one go, the task is 
 distributed across multiple processors for simultaneous processing. This approach leverages the power of modern hardware, with multiple cores 
@@ -458,10 +459,10 @@ problems, parallelisation is a game-changer in fields like scientific computing,
 
 \medskip
 
-If we can use the GPU to perform calculations in parallel, we can achieve a significant speedup. However, there is a catch: the GPU is not as 
-flexible as the CPU. It is designed for parallel processing of large amounts of data, making it ideal for tasks like matrix multiplication. However, 
+If we can use the GPU to perform calculations in parallel, we can significantly accelerate the calculations. However, the GPU is not as 
+flexible as the CPU. It is designed for parallel processing of large amounts of data, making it ideal for specific tasks like matrix multiplication. Nevetheless, 
 the GPU is not well-suited for tasks that require branching or recursion, as these can slow down processing speed. Therefore, to take full advantage of 
-the GPU, we need to structure our code in a way that aligns with the GPU's strengths.
+the GPU, we need to structure our code in a way that aligns with the strength of GPU.
 
 \medskip
 
@@ -474,22 +475,22 @@ the GPU, we need to structure our code in a way that aligns with the GPU's stren
 \subsubsection{Parallelisation Strategies}
 
 To parallelize the code, we need to identify the independent parts. In both the \textit{cmaes} and \textit{mcmc} algorithms, a population is generated 
-for each generation (or step), and each individual in the population is evaluated independently to calculate the goodness of fit. Since one generation 
+for each generation (or step), and each individual in the population is evaluated independently thourhg the calculation of the goodness of fit. Since one generation 
 depends on the best fit of the previous generation, parallelizing the generation is not possible. However, parallelizing the evaluation of individuals 
-in the population is possible.
+in the population of one generation is possible.
 
 \medskip
 
 Initially, to avoid the complexity of GPU parallelisation, we used the multiprocessing library in Python to parallelize the code. This library allows 
 us to run multiple processes in parallel, each on a different core. We used the \textit{Pool} class from the multiprocessing library to create a pool 
-of workers, each evaluating the goodness of fit. This approach reduced computation time significantly, as multiple individuals could be evaluated simultaneously.
+of workers, each evaluating the goodness of fit. This approach reduced computation time significantly, as multiple individuals can be evaluated simultaneously.
 
 \medskip
 
-However, the code still contained many for-loops that could be parallelized using NumPy operations. NumPy, being a highly optimized library for numerical 
-operations, was used to further optimize the code. Wherever for-loops could be replaced by NumPy operations, we did so, further reducing computation time. 
-The major challenge was that the quantities we wanted to perform operations on were not of the same shape, requiring the use of NumPy broadcasting to 
-perform the operations (see Figure \ref{fig:broadcasting} for an example).
+The initial CDSAXS algorithms contained multiple for-loops, making the parallelisation not possible. One of my first task was to replace
+replaced for-loops by NumPy operations. Indeed, NumPy is a highly optimized library for numerical operations.
+The major challenge was that the quantities we wanted to perform operations on were not of the same shape, requiring the use of NumPy to broadcast the different arrays
+we wanted to perform the operations on (see figure \ref{fig:broadcasting} for an example).
 
 \medskip
 
@@ -508,7 +509,7 @@ perform the operations (see Figure \ref{fig:broadcasting} for an example).
 
 \FloatBarrier
 
-After this step, it was easier to parallelize the code for GPU. As the code was already vectorized, we used the CuPy library, a GPU-accelerated 
+After reworking the initial code and fully replacing the for-loops by Numpy operations, it was easier to parallelize the code for GPU. As the code was already vectorized, we used the CuPy library, a GPU-accelerated 
 version of NumPy. CuPy is built on top of CUDA, a parallel computing platform and application programming interface created by Nvidia. CuPy uses 
 CUDA libraries like cuBLAS, cuDNN, cuFFT, cuSPARSE, etc., which are highly optimized for parallel computing (more information can be found in its 
 documentation page \cite{cupy}).
@@ -523,13 +524,16 @@ documentation page \cite{cupy}).
 
 \FloatBarrier
 
-However, we are essentially replacing NumPy operations with CuPy operations, some operations 
-are more efficient in NumPy than in CuPy. For example, cumulative sum in CuPy is slower than in 
+The performances of the code between non-vectorized, vectorized and GPU compatible are presented on the figure
+\ref{fig:cupy}. The are significant improvments between the vectorized and non vectorized code, more than an order of magnitude gain in time.
+However, the transition from a vectorized code to the GPU version only provided a marginal gain.
+This can be explained by the fact that the difference between the GPU and vectorized code is essentially replacing NumPy operations with CuPy operations.
+And some operations are more efficient in NumPy than in CuPy. For example, cumulative sum in CuPy is slower than in 
 NumPy because the nature of the operation is not parallelizable. However, the calculation of the 
 analytical Fourier transform and the calculation of log error are much faster in CuPy than in 
-NumPy. Thus, we still need to identify the parts of the code that are slowing down the execution 
+NumPy. Thus, we still need to identify the parts of the code that are slowing down the GPU execution 
 time due to communication overhead and replace them with NumPy operations. This is perhaps why 
-we don't see a significant speedup in the execution time in Figure \ref{fig:cupy}. However, the 
+we do not see a significant speedup in the execution time in figure \ref{fig:cupy}. However, the 
 code is now ready to be used on a GPU and can be further optimized. This will be the next step 
 in the project.
 
@@ -551,7 +555,7 @@ Another objective identified in our research was to utilize the code to estimate
 uncertainty in real-time during synchrotron experiments. The uncertainty in CD-SAXS experiments 
 depends on various factors such as exposure time, sample thickness, detector distance, etc. Among 
 these, exposure time plays a crucial role in determining uncertainty. The study by Sunday et al. \cite{sunday2016evaluation} 
-provides an excellent example of this relationship (see Figure \ref{fig:exposure}).
+provides an excellent example of this relationship (see figure \ref{fig:exposure}).
 
 \begin{figure}[h]
 \centering
@@ -561,7 +565,7 @@ provides an excellent example of this relationship (see Figure \ref{fig:exposure
 \end{figure}
 
 Sunday et al. conducted measurements over a range of angles with specified step sizes for different 
-acquisition times. Their results, shown in the figure, present representative data cuts for various 
+acquisition times. Their results, shown in the figure \ref{fig:exposure}, present representative data cuts for various 
 order peaks, illustrating the impact of exposure time on data quality. The first-order peak, which 
 exhibits the most intense scattering, remains well-defined even at shorter acquisition times. However, 
 as the measurement time decreases, the lower intensity features of the higher-order peaks become 
@@ -578,7 +582,7 @@ To investigate this, a simulation was conducted using the stacked trapezoid mode
 trapezoid was considered with the following parameters: \( h_{1} = h_{2} = 21.5 \) nm, bottom CD = 24 nm, 
 first sidewall angle = 85°, and second sidewall angle = 90°. The simulation aimed to mimic 
 data acquisition at different angles with a measurement time of 2 seconds per angle. The uncertainty 
-was calculated after every 15 angles measured. The results are shown in Figure \ref{fig:uncertainity}.
+was calculated after every 15 angles measured. The results are shown in figure \ref{fig:uncertainity}.
 
 \begin{figure}[h]
 \centering
@@ -587,7 +591,7 @@ was calculated after every 15 angles measured. The results are shown in Figure \
 \label{fig:uncertainity}
 \end{figure}
 
-As seen in Figure \ref{fig:uncertainity}, the uncertainty levels off after a certain number of angles, similar to the findings by Sunday et al.
+As seen in figure \ref{fig:uncertainity}, the uncertainty levels off after a certain number of angles, similar to the findings by Sunday et al.
 However, in our simulation, the angle at which uncertainty stabilizes is around 78 degrees, 
 compared to 30 degrees in their study. This discrepancy could be due to differences in the measured
 structures and other factors. Nevertheless, this simulation demonstrates the feasibility of real-time 
