@@ -98,7 +98,7 @@ various optical elements. The beam is then directed towards the sample. The
 sample is mounted on a device that allows for rotation and translation in all 
 three dimensions. Once the alignment is complete, the sample is rotated along the vertical axis (along the direction of the line), from -60
 to 60 degrees with 1 degree step. The scattered X-rays are collected through a detector in a 
-vacuum chamber. The schematic of the experiment is shown in Figure \ref{fig:exp_setup},
+vacuum chamber. The data then is interpolated and curve for Intensity vs $Q_{z}$ is extracted for fiiting. The schematic of the experiment is shown in Figure \ref{fig:exp_setup},
 and the actual experimental setup is depicted in Figure \ref{fig:exp_setup_real}.
 
 \medskip
@@ -115,29 +115,41 @@ The sample is adjusted until the diffraction pattern is horizontal and centered.
 \caption{Picture of the experimental setup at the BM02 beamline at ESRF.}
 \label{fig:exp_setup_real}
 \end{figure}% talk about the alignement problem and how it was solved
+
 \begin{figure}[h]
     \centering
-    \begin{subfigure}[b]{0.8\textwidth}
-        \includegraphics[width=\textwidth]{images/cdsaxs_diff.png}
-        \caption{experimental setup}
-        \label{fig:exp_setup}
-    \end{subfigure}
+    \begin{minipage}{0.6\textwidth}
+        \centering
+        \begin{subfigure}[b]{\textwidth}
+            \includegraphics[width=\textwidth]{images/cdsaxs_diff.png}
+            \caption{Experimental setup}
+            \label{fig:exp_setup}
+        \end{subfigure}
+    \end{minipage}%
+    \hfill
+    \begin{minipage}{0.4\textwidth}
+        \centering
+        \begin{subfigure}[b]{\textwidth}
+            \includegraphics[width=\textwidth]{images/intensity_qz.png}
+            \caption{The sample is rotated to get various cuts in the reciprocal space}
+        \end{subfigure}
+    \end{minipage}
     
-    \begin{subfigure}[b]{0.4\textwidth}
-        \includegraphics[width=\textwidth]{images/intensity_qz.png}
-        \caption{Intensity vs $Q_z$}
-    \end{subfigure}
+    \begin{minipage}{0.5\textwidth}
+        \centering
+        \begin{subfigure}[b]{\textwidth}
+            \includegraphics[width=\textwidth]{images/rotation.png}
+            \caption{The obtained data is interpolated and data for fitting is extracted}
+        \end{subfigure}
     
-    \caption{CD-SAXS instrument layout. The X-ray beam (thick solid lines) is transmitted through the 
-    patterned sample. Scattered intensity (I) is measured by a 2D detector as a function of scattering angle $(2\theta)$ 
-    and converted to $I(Q_{x})$, where $Q_{x}$ is defined in the text. Measurements are performed at various angles $(\omega)$. b) After conversion from the $(Q_{x},\omega)$
-    plane, the intensities from a trapezoidal cross section would appear as predicted in
-    the model calculation on b, plotted as I as a function of the Fourier component, $Q_{Z}$.}
+    \label{fig:exp_setup_concept}
+    \end{minipage}
+    
+    \caption{CD-SAXS instrument layout: X-ray beam passes through the sample, with scattered 
+    intensity measured by a 2D detector and converted to $I(Q_{x})$. Measurements at various 
+    angles $(\omega)$ are converted, showing intensities as $I$ vs. $Q_{Z}$.}
     \label{fig:isolated_line}
 \end{figure}
-
-\color{red} Figure 10: Change the figure Intensity vs $Q_z$. Add an extra image where you show the rotation and how you convert in qz.
-In the profile I vs q, put I and qz on the axis and not below the picture. The caption is too long. Explain the text and just give brief description in the caption. \color{black},
 
 \FloatBarrier
 
@@ -158,8 +170,8 @@ distribution within the nanoimprinted pattern.
 
 This relationship is considered valid within the limitations of the CD-SAXS geometry,
 which includes a transmission geometry and a low probability of multiple scattering.
-Unfortunately, the conjugate product \color{red} there is no conjugated product in the equation here. Maybe I can suggest: Unfortunately, the measured intensity is the absolute square of the Fourier transform. Therefore there is a loss of the phase information ... \color{black}, in the equation leads to a loss of phase
-information, making it impossible to analytically extract $F(\mathbf{Q})$ from $I(\mathbf{Q})$.
+Unfortunately, the measured intensity is the absolute square of the Fourier transform. Therefore 
+there is a loss of the phase information, making it impossible to analytically extract $F(\mathbf{Q})$ from $I(\mathbf{Q})$.
 Therefore, the primary method for determining feature dimensions involves constructing
 a real-space model of the pattern cross-section. The Fourier transform of this 
 model is then fitted to the experimental CD-SAXS data.
@@ -186,10 +198,10 @@ where,
 \( \begin{array}{l}\mathrm{m}_{1}=\tan \left(\beta_{1}\right) \\ m_{2}=\tan \left(\pi-\beta_{r}\right) \\ t_{1}= q_{x}+m_{1} q_{z} \\ t_{2}= q_{x}+m_{2} q_{z}\end{array} \)
 
 The different parameters used in the equations are illustrated in figure \ref{fig:trapezoid_model}.
-\color{red} You should probably add a sentence to describe the parameters, linewidth, sidewall angles. It might help for future explanations \color{black}
+The $\beta$s represent the side wall angle of the trapezoid, $\omega_{0}$ is the line width and $h$ is the 
+height of the trapezoids. 
 
 \medskip
-\color{red} Wrong tabulation after medskip \color{black}
 
 so,
 \begin{equation}
@@ -225,7 +237,6 @@ an inverse algorithm, which essentially translates the scattered intensity infor
 characteristics.
 
 \medskip
-\color{red} I am changing how it is built. Starting with describing the problem so stating what we start with, what we want and the objective \color{black}
 
 CD-SAXS measurements provides experimental data. The objective of the inverse fitting is to iterate over a high number of different line profile (represented as various combination of stacked trapezoids)
 and to converge towards the profile that its Fourier Transform will best match the experimental data. While the objective seems simple to describe, 
@@ -321,8 +332,7 @@ These results suggest that CMAES offers a powerful tool for analyzing
 complex nanostructures with X-ray scattering data, particularly when 
 dealing with limited computational resources or tight time constraints.
 
-\subsubsection{Uncertainty estimation by Monte Carlo Markov Chain(MCMC) method}
-\label{sec:mcmc_cd-saxs}
+\subsubsection{Uncertainty estimation by Monte Carlo Markov Chain(MCMC) method}\label{sec:mcmc_cdsaxs}
 
 The CMAES algorithm provides a single best-fit solution for the nanostructure parameters. However, it is essential to understand the uncertainty associated with these parameters.
 This uncertainty relates to the different possible combinations of parameters that could result in a similar goodness of fit. 
@@ -337,9 +347,8 @@ The lower and upper bounds of this interval can be used to estimate the uncertai
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.5\textwidth]{images/mcmc.png}
-    \caption{MCMC algorithm exploring all possible sets of parameters that can result in the same goodness of fit.
-    \color{red} Explain what is plotted. What are the different colors \color{black}
-}
+    \caption{MCMC algorithm exploring all possible sets of parameters that can result in the same goodness of fit. The different
+    colours represent the different set of paramaters that can result in the same goodness of fit.}
 \end{figure}
 \medskip
 

@@ -12,9 +12,6 @@ in real-time during synchrotron experiments.
 
 \subsection{Design}
 
-\color{red} I try to re-word here. I found that you are using to general world, like system, ...
-I would recommend to use words with a clearer meaning so we know exactly what you are talking about \color{black}
-
 To gain a clear understanding of how the developed algorithm work, the design of the algorithm is illustrated with the help of an 
 UML diagram in figure \ref{fig:UML}. This diagram offers a roadmap, highlighting the various components and their interactions.
 We will then delve deeper to explore each component role in the algorithm, as explained in the previous section.
@@ -45,20 +42,19 @@ the model diffraction pattern and compare it with the experimental data.
 
 \FloatBarrier
 
-\color{red}Simulation interface and Geometry interface have their name 'inversed' on the UML. Chose which one you want to use and unify: simulation interface or interface simulation.
-I found the explanation of Simulation and Geometry interface really not clear.
-Mention what is their role, being the interface first
-And then mention that they build to simplify future model building (not having afterward to have function geometry dependent)
-\color{black}
+\subsubsection*{\textbf{Interface Simulation:}}
 
-\subsubsection*{\textbf{Simulation interface:}}
+An interface defines a contract that classes must follow, specifying a set of methods that implementing 
+classes should have. In Python, I have chosen to use Protocol to achieve a similar effect. This is 
+the base class for all simulation models. The functions and classes used in it should be implemented 
+in all simulation models. This interface simplifies future model building by ensuring that simulation 
+functions are not geometry-dependent.
 
-This is the base class for all simulation models. The functions and classes used in it should be implemented
-in all simulation models.
+\subsubsection*{\textbf{Interface Geometry:}}
 
-\subsubsection*{\textbf{Geometry interface:}}
-
-Like Simulation interface. This is the base class for all geometry models.
+Similar to the Interface Simulation, this is the base class for all geometry models. This interface 
+simplifies future model building by ensuring that geometry functions are not dependent on the specific 
+simulation details.
 
 
 \subsubsection*{\textbf{Model:}}
@@ -81,7 +77,7 @@ adhere to the base interfaces \textit{Simulation} and \textit{Geometry}.
 
 \medskip
 
-This system \color{red}System again. It is really the right word?? \color{black} is designed to simulate and analyze diffraction patterns using
+This structure is designed to simulate and analyze diffraction patterns using
 a modular approach. At its core, the system comprises several key components:
 the \textit{Fitter}, \textit{Residual}, and interfaces for \textit{Simulation}
 and \textit{Geometry}, along with specific model implementations like the
@@ -158,70 +154,53 @@ ensuring that the component runs as efficiently as possible.
 
 \medskip
 
-\color{red}I propose that you start before the simulation model with the paragraph Brief overview of photoresist lithography.
-That enable to introduce the model. \color{black}
+\subsection{Brief Overview of Photoresist Lithography}
 
+For appropriate context, We will now breifly discuss the Photoresist lithography before moving
+ on to the models is a technique used to fabricate micro and nanoscale structures on substrates.
+It works by first coating the wafer with a light-sensitive material called photoresist. 
+Then, a patterned mask blocks light from specific regions of the photoresist.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.4\textwidth]{images/photo_resist.png}
+\caption{Schematic of the photoresist lithography process (taken from Wikipedia).}
+\label{fig:photo_resist}
+\end{figure}
+
+Exposing the wafer to light triggers a chemical change in the exposed photoresist, making it 
+either soluble (positive tone) or insoluble (negative tone) in a developer solution. This 
+developer removes the unwanted photoresist, revealing the desired circuit pattern on the 
+underlying wafer. Optionally, etching can be used to create physical features by removing 
+exposed areas of the substrate.
+
+In the realm of nanoscale fabrication, techniques like photoresist lithography stand out as 
+pivotal. To model the structures resulting from photoresist lithography, we can observe that 
+many of these structures can be approximated by stacked trapezoids. 
+This simplification forms the foundation of our modeling approach. By considering the cross-sectional
+shapes of these lines, which closely resemble trapezoids, 
+we can create computational models that simulate the fabrication process and predict the resulting geometries.
 
 \subsection{Simulation Models}
 
-In the realm of nanoscale fabrication, techniques like photoresist lithography stands out as a pivotal technique. To model the structures 
-resulting from photoresist lithography, we can observe that many of these structures can be approximated by stacked trapezoids. 
-This simplification forms the foundation of our modeling approach. By considering the cross-sectional shapes of these lines, which 
-closely resemble trapezoids, we can create computational models that simulate the fabrication process and predict the resulting 
-geometries.
-
-\medskip
-
-Our models aims to balance accuracy and computational efficiency. While real structures are complex and not perfectly trapezoidal, 
-using a series of stacked trapezoids provides a practical approximation that can be refined as needed. This approach serves as a robust
-starting point for simulations, allowing us to incrementally increase the number of trapezoids to better match the real structures.
-
-\medskip
-
-Furthermore, we extend this model to account for rounded corners, which are common in actual fabricated structures. By approximating 
-these rounded corners with smaller trapezoids, we can enhance the accuracy of our simulations without significantly increasing 
-computational costs. Future developments may explore more direct modeling techniques, such as using sections of circles, to further
-improve the fidelity of our models.
-
-\medskip
-
-Lastly, we introduced the modeling of overlay phenomena, which consists of the misalignment of different layers on a wafer during 
-consecutive lithography stages.
-
-
-\subsubsection{Brief overview of photoresist lithography}
-
-These models are build to simulate the simple structure obtained through techniques like photoresist 
-lithography. It is a technique used to fabricate micro and nano-scale structures on substrates. 
-It works by first coating the wafer with a light-sensitive material called photoresist. Then, a patterned
-mask blocks light from specific regions of the photoresist. 
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.4\textwidth]{images/photo_resist.png}
-    \caption{Schematic of the photoresist lithography process (taken from wikipedia).}
-    \label{fig:lithography}
-\end{figure}
-
-\FloatBarrier
-
-Exposing the wafer to light triggers a 
-chemical change in the exposed photoresist, making it either soluble (positive tone) or insoluble 
-(negative tone) in a developer solution. This developer removes the unwanted photoresist, 
-revealing the desired circuit pattern on the underlying wafer. Optionally, etching can be used to 
-create physical features by removing exposed areas of the substrate.
-
- \medskip
-
-While developing our model, we consider lines of nanostructures on a substrate (see figure \ref{fig:lines}) obtained through this process.
+While developing our model, we consider lines of nanostructures on a substrate created using 
+the photoresist lithography (see Figure \ref{fig:lines_TEM}) obtained through this process.
 
 \begin{figure}[h]
-    \centering
-    \includegraphics[width=0.3\textwidth]{images/lines_modeled.png}
-    \caption{Image obtained with a scanning electron microscope in top view of the structure for modelling. 
-    In red, the average signal over the length of the lines is superimposed.\cite{these_reche}}
-    \label{fig:lines}
+\centering
+\includegraphics[width=0.3\textwidth]{images/lines_modeled.png}
+\caption{Image obtained with a scanning electron microscope in top view of the structure for modeling.
+In red, the average signal over the length of the lines is superimposed.\cite{these_reche}}
+\label{fig:lines_TEM}
 \end{figure}
 
+\medskip
+
+Our models aim to balance accuracy and computational efficiency. While real structures are complex and not perfectly trapezoidal, using a series of stacked trapezoids provides a practical approximation that can be refined as needed. This approach serves as a robust starting point for simulations, allowing us to incrementally increase the number of trapezoids to better match the real structures.
+
+Furthermore, we extend this model to account for rounded corners, which are common in actual fabricated structures. By approximating these rounded corners with smaller trapezoids, we can enhance the accuracy of our simulations without significantly increasing computational costs. Future developments may explore more direct modeling techniques, such as using sections of circles, to further improve the fidelity of our models.
+
+Lastly, we introduced the modeling of overlay phenomena, which consists of the misalignment of different layers on a wafer during consecutive lithography stages.
 \subsubsection{Stacked Trapezoid Model}
 
 A close examination of the cross-section of the lines in figure \ref{fig:trapezoid} reveals that their shapes can be closely approximated by stacked trapezoids. This crucial observation forms the foundation of our modeling approach.
@@ -236,8 +215,7 @@ A close examination of the cross-section of the lines in figure \ref{fig:trapezo
 \end{figure}
 
 
-Figure \ref{fig:trapezoid_model} \color{red} it is weird to cite a figure used so far before. Maybe you could add a model that mimic the profile with the same set of parameters \color{black} 
-illustrates the approximation of the model we aim to simulate. 
+Figure \ref{fig:trapezoid_model} illustrates the approximation of the model we aim to simulate. 
 The model inputs include a constant height (h) or sets of heights, sidewall angles ($\beta$), and the
 bottom width ($\omega_{0}$) of the trapezoids. By allowing variable heights for each trapezoid layer, we can 
 achieve better control over the structure, albeit at the cost of increasing the number of 
@@ -288,13 +266,10 @@ diffraction pattern more accurately, reflecting the real structure more closely.
 
 \medskip
 
-While this model has not been implemented yet, a similar codebase already exists. This existing
+While this model has not been implemented yet in the current version of the application, a similar codebase already exists. This existing
 code provides a strong foundation for future implementation in the new workframe.
 
 \medskip
-
-\color{red} The next paragraph needs to be rephrase. Currently, they implemented the calculation of all the trapezoids from 
-the 2 radius as you mentioned. It is already developed (not perfectly but this is how it was done).\color{black} 
 
 Simulating rounded corners with a large number of trapezoids significantly increases the 
 computational cost of the model. To address this, exploring alternative approaches for representing 
@@ -305,14 +280,9 @@ diffraction pattern. This method has the potential to significantly reduce the c
 complexity compared to using a multitude of trapezoids.
 
 \subsubsection{Overlay model}
-\color{red} The context need to be rewritten here. Check this webpage: https://www.asml.com/en/news/stories/2022/what-is-a-gate-all-around-transistor
-The main argumentation about overlay is that the next generation of transistor are not planar anymore but in 3D. So you stack layers that can be shifted, introducing overlay
-\color{black} 
-
-
 
 The latest and future generation of transistors are transitioning from planar structure towards 3D structure such as fin field-effect (FinFET) and Gate All Around (GAA).
-\color{red} Add a figure to illustrate \color{black} 
+(see figure \ref{fig:planar_vs_3d})
 Transistors are built layer-by-layer through a series of lithography steps. 
 Each layer involves depositing a specific material (like a metal for contacts or a 
 special material for transistors) in a defined pattern. Precise alignment between these 
@@ -320,34 +290,36 @@ layers is crucial for the final device to function properly. This means features
 contacts, lines, and transistors must be perfectly positioned relative to each other 
 on the wafer.
 
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.7\textwidth]{images/planar_vs_3d.png}
+    \caption{Different kinds of transistors.}
+    \label{fig:planar_vs_3d}
+\end{figure}
+
 \medskip
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.5\textwidth]{images/overlay.PNG}
-    \caption{Overlay model. \color{red} Top CD is wrong. It is the linewidth after the shift \color{black} 
-    }
+    \includegraphics[width=0.5\textwidth]{images/overlay.png}
+    \caption{Overlay model: The first stack is three trapezoids and the second stack of two trapezoid is shifted by an amount called the Overlay.}
     \label{fig:overlay}
 \end{figure}
 
 \FloatBarrier
 
 The overlay model is designed to simulate the critical aspect of layer alignment during wafer 
-fabrication. This model builds upon the concept of the stacked trapezoid model, but extends it to 
-capture misalignment effects. 
-\color{red} Next sentence is not clear. Maybe just mentioned that a shift or overlay between two lithography processes is introduced
-It is not obvious that one layer is 3 trapezoids ...\color{black}
-It incorporates two sets of trapezoids: one set for each layer. The 
+fabrication. This model builds upon the concept of the stacked trapezoid model, but it also introduces 
+overlay between two lithographical layers.
+It incorporates two sets of trapezoids: set of three and set of two for each layer in this case. The 
 key difference lies in the positioning of the second layer of trapezoids. These are shifted by a 
-specific amount, called the Top Critical Dimension (Top CD), in the x-direction. This shift 
+specific amount, called the overlay, in the x-direction. This shift 
 represents potential misalignment between layers.
 
-\medskip
-\color{red} No top CD is the linewidth of the top structure. 
-But the top set of trapezoids is shifted. That is the overlay\color{black}
+
 To calculate the coordinates of the second layer trapezoids, we can leverage the same method 
 used for the stacked trapezoid model. However, for the second layer, an additional x-axis shift 
-equal to the Top CD value is applied.
+equal to the overlay value is applied.
 
 \medskip
 
@@ -356,7 +328,6 @@ The \textit{StackedTrapezoidGeometry} class will be modified to include the shif
 user and can be fitted later on.
 
 \subsection{Implementation of MCMC to Measure Uncertainty}
-\color{red} Does not know the ref mcmc cdsaxs \color{black}
 As discussed in Section \ref{sec:mcmc_cdsaxs}, after finding the best fit for a model using the \textit{cmaes} algorithm, it is crucial 
 to determine the uncertainty for each parameters of the model. This is where the \textit{mcmc} method of the \textit{Fitter} class becomes essential. 
 While we follow a similar approach to the algorithm described in Section \ref{sec:mcmc_cdsaxs}, there are key differences that will be discussed 

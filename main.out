@@ -12,23 +12,23 @@
 \BOOKMARK [2][-]{subsection.3.3}{Scattering Model}{section.3}% 12
 \BOOKMARK [2][-]{subsection.3.4}{Fitting Algorithm}{section.3}% 13
 \BOOKMARK [3][-]{subsubsection.3.4.1}{Covariance Matrix Adaptation Evolution Strategy \(CMAES\)}{subsection.3.4}% 14
-\BOOKMARK [3][-]{subsubsection.3.4.2}{Uncertainity estimation by Monte Carlo Markov Chain\(MCMC\) method}{subsection.3.4}% 15
-\BOOKMARK [3][-]{subsubsection.3.4.3}{Overall view}{subsection.3.4}% 16
+\BOOKMARK [3][-]{subsubsection.3.4.2}{Uncertainty estimation by Monte Carlo Markov Chain\(MCMC\) method}{subsection.3.4}% 15
+\BOOKMARK [3][-]{subsubsection.3.4.3}{Overall view of the CD-SAXS inverse problem resolution}{subsection.3.4}% 16
 \BOOKMARK [1][-]{section.4}{My contribution}{}% 17
 \BOOKMARK [2][-]{subsection.4.1}{Introduction}{section.4}% 18
 \BOOKMARK [2][-]{subsection.4.2}{Design}{section.4}% 19
 \BOOKMARK [3][-]{subsubsection.4.2.1}{Components}{subsection.4.2}% 20
 \BOOKMARK [3][-]{subsubsection.4.2.2}{Relationships between components}{subsection.4.2}% 21
 \BOOKMARK [3][-]{subsubsection.4.2.3}{Why this design?}{subsection.4.2}% 22
-\BOOKMARK [2][-]{subsection.4.3}{Simulation Models}{section.4}% 23
-\BOOKMARK [3][-]{subsubsection.4.3.1}{Brief overview of photoresist lithography}{subsection.4.3}% 24
-\BOOKMARK [3][-]{subsubsection.4.3.2}{Stacked Trapezoid Model}{subsection.4.3}% 25
-\BOOKMARK [3][-]{subsubsection.4.3.3}{Rounded corners model}{subsection.4.3}% 26
-\BOOKMARK [3][-]{subsubsection.4.3.4}{Overlay model}{subsection.4.3}% 27
-\BOOKMARK [2][-]{subsection.4.4}{Implementation of MCMC to Measure Uncertainty}{section.4}% 28
-\BOOKMARK [2][-]{subsection.4.5}{Parallelisation and GPU Acceleration}{section.4}% 29
-\BOOKMARK [3][-]{subsubsection.4.5.1}{Overview of Parallelisation}{subsection.4.5}% 30
-\BOOKMARK [3][-]{subsubsection.4.5.2}{Parallelisation Strategies}{subsection.4.5}% 31
-\BOOKMARK [2][-]{subsection.4.6}{On-the-Fly Uncertainty Estimation}{section.4}% 32
+\BOOKMARK [2][-]{subsection.4.3}{Brief Overview of Photoresist Lithography}{section.4}% 23
+\BOOKMARK [2][-]{subsection.4.4}{Simulation Models}{section.4}% 24
+\BOOKMARK [3][-]{subsubsection.4.4.1}{Stacked Trapezoid Model}{subsection.4.4}% 25
+\BOOKMARK [3][-]{subsubsection.4.4.2}{Rounded corners model}{subsection.4.4}% 26
+\BOOKMARK [3][-]{subsubsection.4.4.3}{Overlay model}{subsection.4.4}% 27
+\BOOKMARK [2][-]{subsection.4.5}{Implementation of MCMC to Measure Uncertainty}{section.4}% 28
+\BOOKMARK [2][-]{subsection.4.6}{Parallelization and GPU Acceleration}{section.4}% 29
+\BOOKMARK [3][-]{subsubsection.4.6.1}{Overview of the concept of parallelisation}{subsection.4.6}% 30
+\BOOKMARK [3][-]{subsubsection.4.6.2}{Parallelization Strategies}{subsection.4.6}% 31
+\BOOKMARK [2][-]{subsection.4.7}{On-the-Fly Uncertainty Estimation}{section.4}% 32
 \BOOKMARK [1][-]{section.5}{Future Prospects}{}% 33
 \BOOKMARK [1][-]{section.6}{Conclusion}{}% 34
